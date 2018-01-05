@@ -5,6 +5,10 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { LoginPage } from '../pages/login/login';
+import { RankingPage } from '../pages/ranking/ranking';
+import { TablePage } from '../pages/table/table';
+
 import {GraphQLModule} from './apollo.config';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -14,7 +18,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    LoginPage,
+    RankingPage,
+    TablePage
   ],
   imports: [
     BrowserModule,
