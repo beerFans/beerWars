@@ -6,3 +6,53 @@ type Link @model {
   description: String!
   url: String!
 }
+
+type User @model {
+  id: ID! @isUnique     # required system field (read-only)
+  createdAt: DateTime!  # optional system field (read-only)
+  updatedAt: DateTime!  # optional system field (read-only)
+
+  name: String!
+  lastName: String!
+  avatarUrl: String!
+  beerCount: Int!
+
+  table: Table @relation(name: "UserTable")
+
+}
+
+type Table @model {
+  id: ID! @isUnique     # required system field (read-only)
+  createdAt: DateTime!  # optional system field (read-only)
+  updatedAt: DateTime!  # optional system field (read-only)
+
+  name: String!
+  picture: String!
+  beerCount: Int!
+
+  qr: QR! @relation(name: "TableQR")
+  waiter: Waiter! @relation (name: "WaitersTables")
+  users: [User!]! @relation(name: "UserTable")
+
+}
+
+type QR @model {
+  id: ID! @isUnique
+  createdAt: DateTime!  # optional system field (read-only)
+  updatedAt: DateTime!  # optional system field (read-only)
+
+  table: Table @relation(name: "TableQR")
+
+}
+
+type Waiter @model {
+  id: ID! @isUnique     # required system field (read-only)
+  createdAt: DateTime!  # optional system field (read-only)
+  updatedAt: DateTime!  # optional system field (read-only)
+
+  name: String!
+  lastName: String!
+  avatarUrl: String!
+
+  tables: [Table!]! @relation (name: "WaitersTables")
+}

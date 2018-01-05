@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Apollo } from 'apollo-angular';
-import { ALL_LINKS_QUERY, AllLinkQueryResponse } from '../../app/graphql';
+import { ALL_LINKS_QUERY } from '../../app/graphql';
 import { Link } from '../../app/types';
-import { Observable } from 'rxjs/Observable';
+
 
 @Component({
   selector: 'page-list',
@@ -42,8 +42,6 @@ export class ListPage implements OnInit {
       query: ALL_LINKS_QUERY
     }).valueChanges.subscribe((response) => {
       // 5
-      console.log(JSON.stringify(response));
-
       this.allLinks = response.data.allLinks;
       this.loading = response.data.loading;
     });
