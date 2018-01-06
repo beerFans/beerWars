@@ -1,4 +1,4 @@
-import {Table, User, Waiter} from './types';
+import {Table, User, Waiter, Link} from './types';
 
 
 import gql from 'graphql-tag'
@@ -44,7 +44,7 @@ export const CREATE_TABLE_MUTATION = gql`
   mutation CreateTableMutation($name: String!, $QRId: String!) {
     createTable(
       name: $name,
-      QRId: $QRId,
+      qrID: $QRId,
     ) {
       id
       createdAt

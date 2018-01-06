@@ -4,7 +4,6 @@ export class Link {
   url?: string;
   createdAt?: string;
   postedBy?: User;
-  votes?: Vote[];
 }
 
 export class User {
@@ -12,7 +11,7 @@ export class User {
   name?: string;
   email?: string;
   avatarUrl?: string;
-  beerCount? : Int;
+  beerCount? : number;
   table? : Table;
 
 }
@@ -21,7 +20,7 @@ export class Table {
   id?: string;
   name?: string;
   picture?: string;
-  beerCount?: Int;
+  beerCount?: number;
   qrID?: string;
   waiter?: Waiter;
   users?: User[];

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { NavController } from 'ionic-angular';
-import { CREATE_TABLE_MUTATION, CreateTableMutationResponse } from '../../app/graphql';
+import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY } from '../../app/graphql';
 
 
 @Component({
@@ -20,20 +20,20 @@ export class HomePage implements OnInit {
   ngOnInit() {
   }
 
-  scanQR() { //Esto deberia encargarse de escanear el codigo y retornar el id
-    return '1234';
-  }
+
 
   joinTable() {
     //Scan QR, me devuelve un id
-    this.QRId = scanQR(); //Solo para probar, seria el que me devuelve el QR
+    this.QRId = this.scanQR(); //Solo para probar, seria el que me devuelve el QR
     //Si no existe mesa con dicho id de qr, la creo (?)
-    if (!existeMesa(this.QRId)) {
-      createTable(this.QRId);
+    if (!this.existeMesa(this.QRId)) {
+      this.createTable(this.QRId);
     }
   }
 
-
+  scanQR() { //Esto deberia encargarse de escanear el codigo y retornar el id
+    return '1234';
+  }
 
   existeMesa(QRId) {
     return false;
@@ -44,6 +44,7 @@ export class HomePage implements OnInit {
       mutation: CREATE_TABLE_MUTATION,
       variables: {
         name: this.tableName,
+        QRId: QRId,
       },
       update: (store, { data: { createTable } }) => {
         const data: any = store.readQuery({
@@ -55,7 +56,7 @@ export class HomePage implements OnInit {
       },
     }).subscribe((response) => {
       // We injected the Router service
-      this.router.navigate(['/']);
+      // this.router.navigate(['/']);
     });
   }
 
