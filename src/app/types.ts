@@ -11,11 +11,27 @@ export class User {
   id?: string;
   name?: string;
   email?: string;
-  votes?: Vote[];
+  avatarUrl?: string;
+  beerCount? : Int;
+  table? : Table;
+
 }
 
-export class Vote {
+export class Table {
   id?: string;
-  user?: User;
-  link?: Link;
+  name?: string;
+  picture?: string;
+  beerCount?: Int;
+  qrID?: string;
+  waiter?: Waiter;
+  users?: User[];
+
+}
+
+export class Waiter {
+  id?: string;
+  name?: string;
+  avatarUrl?: string;
+
+  tables: Table[];
 }

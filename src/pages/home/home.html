@@ -14,5 +14,17 @@
     If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
   </p>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <div class='flex flex-column mt3'>
+  <input
+    class='mb2'
+    [(ngModel)]="tableName"
+    type='text'
+    placeholder='Ingresa Aqui el nombre para tu mesa'
+  />
+</div>
+
+  <button ion-button (click)="joinTable()">Unirse a una mesa</button>
+  <button ion-button icon-left (click)="joinTable()">
+    <ion-icon name="cloud-upload">Unirse a mesa</ion-icon>
+  </button>
 </ion-content>
