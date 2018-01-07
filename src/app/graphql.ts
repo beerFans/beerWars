@@ -1,7 +1,7 @@
-import {Table, User, Waiter, Link} from './types';
+import { Table, User, Waiter, Link } from './types';
 
 
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 
 
 export const ALL_LINKS_QUERY = gql`
@@ -19,11 +19,11 @@ export const ALL_LINKS_QUERY = gql`
 export interface AllLinkQueryResponse {
   allLinks: Link[];
   loading: boolean;
-}
+};
 
 export const ALL_TABLES_QUERY = gql`
   query AllTablesQuery {
-    allLinks {
+    allTables {
       id
       createdAt
       name
@@ -37,7 +37,28 @@ export const ALL_TABLES_QUERY = gql`
 export interface AllTableQueryResponse {
   allTables: Table[];
   loading: boolean;
-}
+};
+
+export const TABLE_QUERY = gql`
+  query TableQuery($qrID: String!){
+    Table(
+      qrID: $qrID
+    ) {
+      id
+      name
+      beerCount
+      users {
+        name
+      }
+    }
+  }
+`;
+
+
+export interface TableQueryResponse {
+  tables: Table;
+  loading: boolean;
+};
 
 
 export const CREATE_TABLE_MUTATION = gql`
@@ -56,4 +77,4 @@ export const CREATE_TABLE_MUTATION = gql`
 export interface CreateTableMutationResponse {
   createTable: Table;
   loading: boolean;
-}
+};
