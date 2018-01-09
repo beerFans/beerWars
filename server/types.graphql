@@ -26,7 +26,7 @@ type Table @model {
   createdAt: DateTime!  # optional system field (read-only)
   updatedAt: DateTime!  # optional system field (read-only)
 
-  name: String!
+  name: String
   picture: String
   beerCount: Int
   qrID: String! @isUnique

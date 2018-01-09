@@ -39,8 +39,8 @@ export interface AllTableQueryResponse {
   loading: boolean;
 };
 
-export const TABLE_QUERY = gql`
-  query TableQuery($qrID: String!){
+export const TABLE_QR_QUERY = gql`
+  query TableQRQuery($qrID: String!){
     Table(
       qrID: $qrID
     ) {
@@ -55,26 +55,38 @@ export const TABLE_QUERY = gql`
 `;
 
 
-export interface TableQueryResponse {
-  tables: Table;
+export interface TableQRQueryResponse {
+  table: Table;
   loading: boolean;
 };
 
 
 export const CREATE_TABLE_MUTATION = gql`
-  mutation CreateTableMutation($name: String!, $QRId: String!) {
+  mutation CreateTableMutation($QRId: String!) {
     createTable(
-      name: $name,
       qrID: $QRId,
     ) {
       id
       createdAt
-      name
     }
   }
 `;
 
 export interface CreateTableMutationResponse {
+  createTable: Table;
+  loading: boolean;
+};
+
+export const CREATE_QR_MUTATION = gql`
+  mutation CreateQRMutation {
+    createQR
+    {
+      id
+    }
+  }
+`;
+
+export interface CreateQRMutationResponse {
   createTable: Table;
   loading: boolean;
 };

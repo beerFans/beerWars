@@ -1,84 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { NavController } from 'ionic-angular';
-import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QUERY, CreateTableMutationResponse } from '../../app/graphql';
-
+import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, CreateTableMutationResponse } from '../../app/graphql';
+import { TableService } from '../../services/table.service';
+import {Table} from '../../app/types'
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  providers: [TableService],
 })
-export class HomePage implements OnInit {
+export class HomePage {
 
-  QRId: string = '';
-  tableName = '';
+  public table : Table;
 
-  constructor(private apollo: Apollo, public navCtrl: NavController) {
+  constructor(private apollo: Apollo, public navCtrl: NavController,private ts:TableService) {
 
   }
 
-  ngOnInit() {
-  }
+
 
 
 
   joinTable() {
     //Scan QR, me devuelve un id
-    this.QRId = this.scanQR(); //Solo para probar, seria el que me devuelve el QR
+    let QR = this.scanQR(); //Solo para probar, seria el que me devuelve el QR
     //Si no existe mesa con dicho id de qr, la creo (?)
-    if (!this.existeMesa(this.QRId)) {
-      console.log("No existe mesa");
 
-      this.createTable(this.QRId);
-    }
-    else {
-      console.log("Existe mesa");
-    }
+    this.ts.getTableByQR(QR).then((table) => {
+      console.log(table);
+        this.table = table;
+        console.log(this.table.beerCount);
+    });
+
   }
 
   scanQR() { //Esto deberia encargarse de escanear el codigo y retornar el id
-    return 'altoqr';
+    return 'cjc6rtajgn9dx0173uusnyhto';
   }
 
-  existeMesa(QRId) {
-    var tableID = "";
-    this.apollo.watchQuery<any>({
-      query: TABLE_QUERY,
-      variables: {
-        qrID: QRId,
-      },
-    }).valueChanges.subscribe((response) => {
-      // 5
-      console.log(response);
 
-      if (response.data.Table) {
-        tableID = response.data.Table.id;
-        console.log(tableID);
-      }
-    });
-    return tableID;
-  }
-
-  createTable(QRId) {
-    this.apollo.mutate({
-      mutation: CREATE_TABLE_MUTATION,
-      variables: {
-        name: this.tableName,
-        QRId: QRId,
-      },
-      update: (store, { data: { createTable } }) => {
-        const data: any = store.readQuery({
-          query: ALL_TABLES_QUERY
-        });
-
-        data.allTables.push(createTable);
-        store.writeQuery({ query: ALL_TABLES_QUERY, data })
-      },
-    }).subscribe((response) => {
-      // We injected the Router service
-      // this.router.navigate(['/']);
-    });
-  }
 
 
 

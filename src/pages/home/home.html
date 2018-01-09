@@ -8,23 +8,15 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <div class='flex flex-column mt3'>
-  <input
-    class='mb2'
-    [(ngModel)]="tableName"
-    type='text'
-    placeholder='Ingresa Aqui el nombre para tu mesa'
-  />
-</div>
+  <!-- Fotito
+  beerCount
+  nombre de la mesa -->
+  <div *ng-if="table">
+    <h3>{{table?.name}}</h3>
+    <h3>{{table?.beerCount}}</h3>
+    <h3>{{table?.id}}</h3>
+  </div>
 
   <button ion-button (click)="joinTable()">Unirse a una mesa</button>
-  <button ion-button icon-left (click)="joinTable()">
-    <ion-icon name="cloud-upload">Unirse a mesa</ion-icon>
-  </button>
 </ion-content>
