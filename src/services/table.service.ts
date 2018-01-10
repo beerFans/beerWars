@@ -22,10 +22,12 @@ export class TableService {
         // 5
         console.log(response);
 
-        if (response.data.table) {
-          resolve(response.data.table);
+        if (response.data.Table) {
+          //Agregar usuario a la mesa
+          resolve(response.data.Table);
         }
         else {
+          console.log('glsdasd');
           this.apollo.mutate({
             mutation: CREATE_TABLE_MUTATION,
             variables: {
