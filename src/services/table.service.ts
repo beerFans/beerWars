@@ -24,18 +24,7 @@ export class TableService {
         let table = response.data.Table;
 
         if (table) {
-          //Agregar usuario a la mesa
-          this.apollo.mutate({
-          mutation: JOIN_TABLE_MUTATION,
-          variables: {
-            userId: 'cjcb6ro4u2gfe0186nwwg3ev4',
-            tableId: table.id,
-          }
-        }).subscribe((response => {
-          console.log('Agregado usuario a mesa');
-          console.log(response);
-          console.log('fin agregar usuario0');
-        }))
+          joinTable(table.id, 'cjcb6ro4u2gfe0186nwwg3ev4')
           resolve(table);
         }
         else {
@@ -44,23 +33,31 @@ export class TableService {
             variables: {
               QRId: QRId,
             },
-            // update: (store, { data: { createTable } }) => {
-            //   const data: any = store.readQuery({
-            //     query: ALL_TABLES_QUERY
-            //   });
-            //
-            //   data.allTables.push(createTable);
-            //   store.writeQuery({ query: ALL_TABLES_QUERY, data });
-            //
-            // },
           }).subscribe((response) => {
             console.log(response);
-            resolve(response.data.createTable);
-            // We injected the Router service
-            // this.router.navigate(['/']);
+            let table = response.data.createTable
+
+            joinTable(table.id, 'cjcb6ro4u2gfe0186nwwg3ev4')
+            resolve(response.data.table);
           });
         }
       });
     });
+  }
+
+
+
+  joinTable(tableId, userId) {
+    this.apollo.mutate({
+      mutation: JOIN_TABLE_MUTATION,
+      variables: {
+        userId: userId,
+        tableId: tableId,
+      }
+    }).subscribe((response => {
+      console.log('Agregado usuario a mesa');
+      console.log(response);
+      console.log('fin agregar usuario0');
+    }))
   }
 }
