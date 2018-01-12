@@ -13,6 +13,7 @@ export class TableService {
 
   getTableByQR(QRId) {
     return new Promise((resolve, reject) => {
+      console.log('Buscando Mesa ' + QRId);
       this.apollo.watchQuery<any>({
         query: TABLE_QR_QUERY,
         variables: {
@@ -20,25 +21,29 @@ export class TableService {
         },
       }).valueChanges.subscribe((response) => {
         // 5
-        console.log(response);
         let table = response.data.Table;
-
+        console.log('response');
+        console.log(response);
         if (table) {
-          this.joinTable(table.id, 'cjcb6ro4u2gfe0186nwwg3ev4')
+          console.log('Ya existia la mesa, uniendose');
+          this.joinTable(table.id, 'cjcb6ro4u2gfe0186nwwg3ev4');
+          console.log('fin unirse a mesa existente');
           resolve(table);
         }
         else {
+          console.log('No existia mesa, creando mesa');
           this.apollo.mutate({
             mutation: CREATE_TABLE_MUTATION,
             variables: {
               QRId: QRId,
             },
+            refetchQueries: ['TableQRQuery']
           }).subscribe((response) => {
-            console.log(response);
-            let table = response.data.createTable
-
-            this.joinTable(table.id, 'cjcb6ro4u2gfe0186nwwg3ev4')
-            resolve(response.data.table);
+            console.log('Mesa creada');
+            let table = response.data.createTable;
+            this.joinTable(table.id, 'cjcb6ro4u2gfe0186nwwg3ev4');
+            console.log('Fin union a mesa creada');
+            resolve(table);
           });
         }
       });

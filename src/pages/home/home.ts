@@ -31,7 +31,6 @@ export class HomePage {
     this.ts.getTableByQR(qr).then((table) => {
       console.log(table);
       this.table = table;
-      console.log(this.table.beerCount);
     });
 
   }
