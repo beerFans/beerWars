@@ -67,6 +67,7 @@ export const CREATE_TABLE_MUTATION = gql`
       qrID: $QRId,
     ) {
       id
+      qrID
       createdAt
     }
   }
@@ -88,5 +89,30 @@ export const CREATE_QR_MUTATION = gql`
 
 export interface CreateQRMutationResponse {
   createTable: Table;
+  loading: boolean;
+};
+
+export const JOIN_TABLE_MUTATION = gql`
+  mutation JoinTableMutation($userId: ID!, $tableId: ID!) {
+    addToUserTable (
+      usersUserId: $userId,
+      tableTableId: $tableId,
+    )
+    {
+      usersUser {
+        id
+      },
+      tableTable {
+        id
+        users {
+          id
+        }
+      }
+    }
+  }
+`;
+
+export interface JoinTableMutationResponse {
+  table: Table;
   loading: boolean;
 };

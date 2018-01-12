@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, CreateTableMutationResponse } from '../app/graphql';
+import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, JOIN_TABLE_MUTATION, CreateTableMutationResponse } from '../app/graphql';
 
 
 
@@ -21,13 +21,24 @@ export class TableService {
       }).valueChanges.subscribe((response) => {
         // 5
         console.log(response);
+        let table = response.data.Table;
 
-        if (response.data.Table) {
+        if (table) {
           //Agregar usuario a la mesa
-          resolve(response.data.Table);
+          this.apollo.mutate({
+          mutation: JOIN_TABLE_MUTATION,
+          variables: {
+            userId: 'cjcb6ro4u2gfe0186nwwg3ev4',
+            tableId: table.id,
+          }
+        }).subscribe((response => {
+          console.log('Agregado usuario a mesa');
+          console.log(response);
+          console.log('fin agregar usuario0');
+        }))
+          resolve(table);
         }
         else {
-          console.log('glsdasd');
           this.apollo.mutate({
             mutation: CREATE_TABLE_MUTATION,
             variables: {
