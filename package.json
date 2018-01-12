@@ -60,20 +60,15 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-<<<<<<< HEAD
       "cordova-plugin-qrscanner": {},
-=======
->>>>>>> master
+
       "ionic-plugin-keyboard": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-<<<<<<< HEAD
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-camera": {}
-=======
-      "cordova-plugin-ionic-webview": {}
->>>>>>> master
+
     },
     "platforms": [
       "android"

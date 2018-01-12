@@ -24,7 +24,7 @@ export class TableService {
         let table = response.data.Table;
 
         if (table) {
-          joinTable(table.id, 'cjcb6ro4u2gfe0186nwwg3ev4')
+          this.joinTable(table.id, 'cjcb6ro4u2gfe0186nwwg3ev4')
           resolve(table);
         }
         else {
@@ -37,7 +37,7 @@ export class TableService {
             console.log(response);
             let table = response.data.createTable
 
-            joinTable(table.id, 'cjcb6ro4u2gfe0186nwwg3ev4')
+            this.joinTable(table.id, 'cjcb6ro4u2gfe0186nwwg3ev4')
             resolve(response.data.table);
           });
         }
