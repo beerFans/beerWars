@@ -26,12 +26,13 @@ type Table @model {
   createdAt: DateTime!  # optional system field (read-only)
   updatedAt: DateTime!  # optional system field (read-only)
 
-  name: String!
-  picture: String!
-  beerCount: Int!
+  name: String
+  picture: String
+  beerCount: Int
+  qrID: String! @isUnique
 
-  qr: QR! @relation(name: "TableQR")
-  waiter: Waiter! @relation (name: "WaitersTables")
+  qr: QR @relation(name: "TableQR")
+  waiter: Waiter @relation (name: "WaitersTables")
   users: [User!]! @relation(name: "UserTable")
 
 }

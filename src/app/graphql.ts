@@ -1,8 +1,7 @@
-import {Link, User} from './types';
-// 1
-import gql from 'graphql-tag'
+import { Table, User, Waiter, Link } from './types';
+import gql from 'graphql-tag';
 
-// 2
+
 export const ALL_LINKS_QUERY = gql`
   query AllLinksQuery {
     allLinks {
@@ -14,31 +13,75 @@ export const ALL_LINKS_QUERY = gql`
   }
 `;
 
-// 3
 export interface AllLinkQueryResponse {
   allLinks: Link[];
   loading: boolean;
-}
+};
 
-// 1
-export const CREATE_LINK_MUTATION = gql`
-  # 2
-  mutation CreateLinkMutation($description: String!, $url: String!) {
-    createLink(
-      description: $description,
-      url: $url,
-    ) {
+export const ALL_TABLES_QUERY = gql`
+  query AllTablesQuery {
+    allTables {
       id
       createdAt
-      url
-      description
+      name
+      beerCount
+      users
     }
   }
 `;
 
-//3
-export interface CreateLinkMutationResponse {
-  createLink: Link;
+export interface AllTableQueryResponse {
+  allTables: Table[];
+  loading: boolean;
+};
+
+export const TABLE_QR_QUERY = gql`
+  query TableQRQuery($qrID: String!){
+    Table(
+      qrID: $qrID
+    ) {
+      id
+      name
+      beerCount
+      users {
+        name
+      }
+    }
+  }
+`;
+
+export interface TableQRQueryResponse {
+  table: Table;
+  loading: boolean;
+};
+
+export const CREATE_TABLE_MUTATION = gql`
+  mutation CreateTableMutation($QRId: String!) {
+    createTable(
+      qrID: $QRId,
+    ) {
+      id
+      createdAt
+    }
+  }
+`;
+
+export interface CreateTableMutationResponse {
+  createTable: Table;
+  loading: boolean;
+};
+
+export const CREATE_QR_MUTATION = gql`
+  mutation CreateQRMutation {
+    createQR
+    {
+      id
+    }
+  }
+`;
+
+export interface CreateQRMutationResponse {
+  createTable: Table;
   loading: boolean;
 };
 
@@ -80,7 +123,6 @@ export const USER_UID_QUERY = gql`
     }
   }
 `;
-
 
 export interface UserUidQueryResponse {
   user: User;
