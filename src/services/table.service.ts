@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { Apollo } from 'apollo-angular';
-import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, CreateTableMutationResponse } from '../app/graphql';
-
+import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, CreateTableMutationResponse, USER_TABLE_QUERY } from '../app/graphql';
+import { Events } from 'ionic-angular';
 
 
 @Injectable()
 export class TableService {
 
-  constructor(private apollo: Apollo) {
+  constructor(private apollo: Apollo, private storage: Storage, private events: Events) {
 
   }
 
@@ -23,6 +24,9 @@ export class TableService {
         console.log(response);
 
         if (response.data.table) {
+          this.storage.set('joined', true);
+          this.storage.set('table', response.data.table);
+          this.events.publish('user:joined');
           resolve(response.data.table);
         }
         else {
@@ -42,6 +46,9 @@ export class TableService {
             // },
           }).subscribe((response) => {
             console.log(response);
+            this.storage.set('joined', true);
+            this.storage.set('table', response.data.createTable);
+            this.events.publish('user:joined');
             resolve(response.data.createTable);
             // We injected the Router service
             // this.router.navigate(['/']);
@@ -50,4 +57,12 @@ export class TableService {
       });
     });
   }
+
+  getTable() {
+    return this.storage.get('table').then((value) => {
+      //mirarrrrrrrrrrrrr
+      return value;
+    })
+  }
+
 }

@@ -12,7 +12,7 @@ import { Events } from 'ionic-angular';
 // import { User } from '../models/user.model';
 import { User } from '../app/types';
 import { Apollo } from 'apollo-angular';
-import { CREATE_USER_MUTATION, USER_UID_QUERY } from '../app/graphql';
+import { CREATE_USER_MUTATION, USER_UID_QUERY, USER_TABLE_QUERY } from '../app/graphql';
 
 @Injectable()
 export class UserService {
@@ -126,6 +126,31 @@ export class UserService {
         resolve(response.data.User);
       })
     })
+  }
+
+  isJoined(userId) {
+    return new Promise((resolve, reject) => {
+      this.apollo.watchQuery<any>({
+        query: USER_TABLE_QUERY,
+        variables: {
+          id: userId,
+        },
+      }).valueChanges.subscribe((response) => {
+        // 5
+        console.log(response);
+
+        if (response.data.User.table) {
+          console.log("user table",response.data.User);
+          // this.storage.set('joined', true);
+          // this.storage.set('table', response.data.table);
+          // this.events.publish('user:joined');
+          this.storage.get('joined').then((value) => resolve(value === true));
+        }
+        else{
+          this.storage.get('joined').then((value) => resolve(value === false));
+        }
+      })
+    }).catch((error)=> {console.log(error)})
   }
 
 

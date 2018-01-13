@@ -128,3 +128,28 @@ export interface UserUidQueryResponse {
   user: User;
   loading: boolean;
 };
+
+export const USER_TABLE_QUERY = gql`
+  query UserTableQuery($id: ID!){
+    User(
+      id: $id
+    ) {
+      table{
+        id,
+        name,
+        picture,
+        beerCount,
+        qrID,
+        users{
+          name,
+          avatarUrl
+        }
+      }
+    }
+  }
+`;
+
+export interface UserTableQueryResponse {
+  user: User;
+  loading: boolean;
+};
