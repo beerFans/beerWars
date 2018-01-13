@@ -7,48 +7,10 @@
 </ion-header>
 
 <ion-content padding>
+
   <div padding-top>
-    <img class="logo" src="assets/images/logo-2.png">
+    <img class="logo" src="assets/imgs/beerWars.jpg">
   </div>
-
-  <form padding-top padding-right [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
-    <ion-item>
-      <ion-label stacked color="primary">Email</ion-label>
-      <ion-input type="email" formControlName="email"></ion-input>
-    </ion-item>
-    <ion-label no-padding padding-left *ngIf="loginForm.controls.email.touched && loginForm.controls.email.hasError('required')" color="danger">
-      <small>* Se requiere email</small>
-    </ion-label>
-    <ion-label no-padding padding-left *ngIf="loginForm.controls.email.touched && loginForm.controls.email.hasError('invalidEmailFormat')" color="danger">
-      <small>* Formato de email inválido</small>
-    </ion-label>
-
-    <ion-item>
-      <ion-label stacked color="primary">Contrase&ntilde;a</ion-label>
-      <ion-input type="password" formControlName="password"></ion-input>
-    </ion-item>
-    <ion-label no-padding padding-left *ngIf="loginForm.controls.password.touched && loginForm.controls.password.hasError('required')" color="danger">
-      <small>* Se requiere contrase&ntilde;a</small>
-    </ion-label>
-    <ion-label no-padding padding-left *ngIf="loginForm.controls.password.touched && (loginForm.controls.password.hasError('minlength') || loginForm.controls.password.hasError('maxlength'))" color="danger">
-      <small>* La contrase&ntilde;a debe contener entre 6 y 18 caracteres</small>
-    </ion-label>
-
-    <div padding-left padding-top hideWhen="windows">
-      <button ion-button block [disabled]="!loginForm.valid">Entrar</button>
-    </div>
-    <div padding-left padding-top padding-right showWhen="windows">
-      <button ion-button block [disabled]="!loginForm.valid">Entrar</button>
-    </div>
-
-  </form>
-
-  <div text-center padding-top padding-right>
-    <button ion-button small clear text-only (click)="resetPassword()">
-      ¿Olvidaste tu contrase&ntilde;a?
-    </button>
-  </div>
-
   <ion-grid padding-left padding-top padding-right>
     <ion-row>
       <button ion-button block color="facebook" (click)="loginWithFacebook()">
@@ -62,9 +24,4 @@
     </ion-row>
   </ion-grid>
 
-  <div padding-left padding-top padding-right>
-    <button ion-button outline block (click)="register()">
-      ¿No ten&eacute;s cuenta?
-    </button>
-  </div>
 </ion-content>

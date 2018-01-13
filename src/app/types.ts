@@ -4,18 +4,33 @@ export class Link {
   url?: string;
   createdAt?: string;
   postedBy?: User;
-  votes?: Vote[];
 }
 
 export class User {
   id?: string;
+  uid?: string;
   name?: string;
   email?: string;
-  votes?: Vote[];
+  avatarUrl?: string;
+  beerCount? : number;
+  table? : Table;
 }
 
-export class Vote {
+export class Table {
   id?: string;
-  user?: User;
-  link?: Link;
+  name?: string;
+  picture?: string;
+  beerCount?: number;
+  qrID?: string;
+  waiter?: Waiter;
+  users?: User[];
+
+}
+
+export class Waiter {
+  id?: string;
+  name?: string;
+  avatarUrl?: string;
+
+  tables: Table[];
 }
