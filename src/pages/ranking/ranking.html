@@ -14,5 +14,17 @@
 
 
 <ion-content padding>
-
+  <h4 *ngIf="loading">Loading...</h4>
+  <ion-list>
+    <div *ngFor="let table of allTables">
+      <ion-item (click)="goToTable(table)">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-9>{{table.id}}</ion-col>
+            <ion-col col-3>{{table.beerCount}}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </div>
+  </ion-list>
 </ion-content>

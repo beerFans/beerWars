@@ -12,6 +12,7 @@ type User @model {
   createdAt: DateTime!  # optional system field (read-only)
   updatedAt: DateTime!  # optional system field (read-only)
 
+  uid: String! @isUnique
   name: String
   avatarUrl: String
   beerCount: Int

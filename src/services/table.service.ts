@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
+import { Table } from '../app/types'
 import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, JOIN_TABLE_MUTATION, CreateTableMutationResponse } from '../app/graphql';
 
 
@@ -9,6 +10,18 @@ export class TableService {
 
   constructor(private apollo: Apollo) {
 
+  }
+
+  getTables() {
+    return new Promise((resolve,reject) => {
+      console.log("Buscando mesas");
+      this.apollo.watchQuery<any>({
+        query: ALL_TABLES_QUERY
+      }).valueChanges.subscribe((response) => {
+        console.log(response.data.allTables);
+        resolve(response);
+      });
+    });
   }
 
   getTableByQR(QRId) {
@@ -26,7 +39,7 @@ export class TableService {
         console.log(response);
         if (table) {
           console.log('Ya existia la mesa, uniendose');
-          this.joinTable(table.id, 'cjcb6ro4u2gfe0186nwwg3ev4');
+          this.joinTable(table.id, 'cjcdncsmbofde0149u2xjnk8c'); //user.service.getUser().then((user) => { this.joinTable(table.id, user.id) })
           console.log('fin unirse a mesa existente');
           resolve(table);
         }
@@ -37,7 +50,7 @@ export class TableService {
             variables: {
               QRId: QRId,
             },
-            refetchQueries: ['TableQRQuery']
+            refetchQueries: ['TableQRQuery','AllTablesQuery']
           }).subscribe((response) => {
             console.log('Mesa creada');
             let table = response.data.createTable;
@@ -58,11 +71,11 @@ export class TableService {
       variables: {
         userId: userId,
         tableId: tableId,
-      }
-    }).subscribe((response => {
+    }
+    }).subscribe((response) => {
       console.log('Agregado usuario a mesa');
       console.log(response);
       console.log('fin agregar usuario0');
-    }))
+    })
   }
 }

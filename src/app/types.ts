@@ -13,7 +13,6 @@ export class User {
   avatarUrl?: string;
   beerCount? : number;
   table? : Table;
-
 }
 
 export class Table {

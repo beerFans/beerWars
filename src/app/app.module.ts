@@ -22,8 +22,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     ListPage,
     LoginPage,
-    RankingPage,
-    TablePage
+    RankingPage
   ],
   imports: [
     BrowserModule,
@@ -34,7 +33,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    RankingPage
   ],
   providers: [
     // Camera,
