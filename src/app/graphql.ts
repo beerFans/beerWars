@@ -1,6 +1,4 @@
 import { Table, User, Waiter, Link } from './types';
-
-
 import gql from 'graphql-tag';
 
 
@@ -14,7 +12,6 @@ export const ALL_LINKS_QUERY = gql`
     }
   }
 `;
-
 
 export interface AllLinkQueryResponse {
   allLinks: Link[];
@@ -35,7 +32,7 @@ export const ALL_TABLES_QUERY = gql`
 `;
 
 
-export interface AllTablesQueryResponse {
+export interface AllTableQueryResponse {
   allTables: Table[];
   loading: boolean;
 };
@@ -55,12 +52,10 @@ export const TABLE_QR_QUERY = gql`
   }
 `;
 
-
 export interface TableQRQueryResponse {
   table: Table;
   loading: boolean;
 };
-
 
 export const CREATE_TABLE_MUTATION = gql`
   mutation CreateTableMutation($QRId: String!) {
@@ -120,7 +115,6 @@ export interface JoinTableMutationResponse {
   loading: boolean;
 };
 
-
 export const CREATE_USER_MUTATION = gql`
   mutation CreateUserMutation($uid: String!, $name: String!, $avatarURL: String, $email: String!) {
     createUser(
@@ -145,7 +139,6 @@ export interface CreateUserMutationResponse {
   loading: boolean;
 };
 
-
 export const USER_UID_QUERY = gql`
   query UserUidQuery($uid: String!){
     User(
@@ -160,7 +153,6 @@ export const USER_UID_QUERY = gql`
     }
   }
 `;
-
 
 export interface UserUidQueryResponse {
   user: User;

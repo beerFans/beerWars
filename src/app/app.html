@@ -5,11 +5,28 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
+  <ion-content class="outer-content">
+    <!-- <section>
+      <div class="banner">
+        <img src="assets/images/side-menu-background.jpg" />
+        <div class="content" text-center>
+          <h3><b>{{ user?.firstname }} {{ user?.lastname }}</b></h3>
+          <p>{{ user?.email }}</p>
+        </div>
+      </div>
+      <div class="avatar">
+        <img [src]="user?.picture" onError="this.src='assets/images/profile.png'" />
+      </div>
+    </section> -->
+
     <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
+      <div *ngFor="let p of appPages">
+        <ion-item tappable menuClose (click)="openPage(p)">
+          <ion-icon item-start [name]="p?.icon" color="primary"></ion-icon>
+          {{ p?.title }}
+          <p text-wrap>{{ p?.description }}</p>
+        </ion-item>
+      </div>
     </ion-list>
   </ion-content>
 

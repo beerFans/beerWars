@@ -34,32 +34,146 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
+  primary:    #4456a2,
+  secondary:  #00838f,
+  gray:       #7d7978,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  white:      #ffffff,
+  dark:       #222,
+  favorite:   #69BB7B,
+  success:    #32db64,
+  warning:    #f0ff5e,
+  error:      #F63434,
+  bc:         #f1f1f1,
+  navbar:     #ec4439,
+  important:  #ED822A,
+
+  twitter:    #1da1f4,
+  google:     #dc4a38,
+  facebook:   #3b5998,
+
+  gris: #939393,
+
+  marker-supermercado: #554995,
+  marker-autoservicio: #78bcbb,
+  marker-hipermercado: #f29200
 );
 
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+
+$text-color:                               color($colors, dark);
+$background-color:                         color($colors, bc);
+$headings-font-weight: 300;
+
+$text-input-highlight-color-valid:         color($colors, success);
+$text-input-highlight-color-invalid:       color($colors, error);
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
+// Toolbar
+$toolbar-ios-background:                   color($colors, navbar);
+$toolbar-ios-active-color:                 color($colors, primary);
+$toolbar-ios-inactive-color:               color($colors, light);
 
+//Loading
+//$loading-ios-background:                   #2E2E2E;
+$loading-ios-spinner-color:                color($colors, primary);
+//$loading-ios-text-color:                   color($colors, light);
+$loading-ios-border-radius:                8px;
 
+// Menu
+$menu-ios-background:                      color($colors, navbar);
+
+// Tabs
+$tabs-ios-background:                      color($colors, light);
+$tabs-ios-tab-color-active:                color($colors, navbar);
+$tabs-ios-tab-color:                       color($colors, primary);
+$tabs-ios-tab-min-height: 49px;
+$tabs-ios-tab-font-size: 10px;
+
+// Toast
+$toast-ios-background:                     color($colors, primary);
+
+// Inputs
+$text-input-ios-show-valid-highlight:      true;
+$text-input-ios-show-invalid-highlight:    true;
+
+// Change the color of the segment button text
+$segment-button-ios-text-color-activated:  color($colors, dark);
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
+// Toolbar
+$toolbar-md-background:                   color($colors, navbar);
+$toolbar-md-active-color:                 color($colors, primary);
+$toolbar-md-inactive-color:               color($colors, light);
 
+//Loading
+//$loading-md-background:                   #2E2E2E;
+$loading-md-spinner-color:                color($colors, primary);
+//$loading-md-text-color:                   color($colors, light);
+$loading-md-border-radius:                8px;
+
+// Menu
+$menu-md-background:                      color($colors, navbar);
+
+// Tabs
+$tabs-md-background:                      color($colors, light);
+$tabs-md-tab-color-active:                color($colors, navbar);
+$tabs-md-tab-color:                       color($colors, primary);
+$tabs-md-tab-min-height: 49px;
+$tabs-md-tab-text-margin-active: 0px 0;
+$tabs-md-tab-font-size: 10px;
+$tabs-md-tab-font-size-active: 10px;
+
+// Toast
+$toast-md-background:                     color($colors, primary);
+
+// Change the color of the segment button text
+$segment-button-md-text-color-activated:  color($colors, dark);
 
 
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
 
+// Toolbar
+$toolbar-wp-background:                   color($colors, navbar);
+$toolbar-wp-active-color:                 color($colors, primary);
+$toolbar-wp-inactive-color:               color($colors, light);
+
+//Loading
+//$loading-wp-background:                   #2E2E2E;
+$loading-wp-spinner-color:                color($colors, primary);
+//$loading-wp-text-color:                   color($colors, light);
+$loading-wp-border-radius:                8px;
+
+// Menu
+$menu-wp-background:                      color($colors, navbar);
+
+// Tabs
+$tabs-wp-background:                      color($colors, light);
+$tabs-wp-tab-color-active:                color($colors, navbar);
+$tabs-wp-tab-color:                       color($colors, primary);
+$tabs-wp-tab-min-height: 49px;
+$tabs-wp-tab-font-size: 10px;
+$tabs-wp-tab-font-size-active: 10px;
+
+// Toast
+$toast-wp-background:                     color($colors, primary);
+
+// Change the color of the segment button text
+$segment-button-wp-text-color-activated:  color($colors, dark);
 
 
 
