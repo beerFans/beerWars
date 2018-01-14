@@ -22,13 +22,15 @@ export const ALL_TABLES_QUERY = gql`
   query AllTablesQuery {
     allTables {
       id
-      createdAt
       name
       beerCount
-      users
+      users {
+        id
+      }
     }
   }
 `;
+
 
 export interface AllTableQueryResponse {
   allTables: Table[];
@@ -59,9 +61,12 @@ export const CREATE_TABLE_MUTATION = gql`
   mutation CreateTableMutation($QRId: String!) {
     createTable(
       qrID: $QRId,
+      beerCount: 0
     ) {
       id
+      qrID
       createdAt
+      beerCount
     }
   }
 `;
@@ -85,6 +90,31 @@ export interface CreateQRMutationResponse {
   loading: boolean;
 };
 
+export const JOIN_TABLE_MUTATION = gql`
+  mutation JoinTableMutation($userId: ID!, $tableId: ID!) {
+    addToUserTable (
+      usersUserId: $userId,
+      tableTableId: $tableId,
+    )
+    {
+      usersUser {
+        id
+      },
+      tableTable {
+        id
+        users {
+          id
+        }
+      }
+    }
+  }
+`;
+
+export interface JoinTableMutationResponse {
+  table: Table;
+  loading: boolean;
+};
+
 export const CREATE_USER_MUTATION = gql`
   mutation CreateUserMutation($uid: String!, $name: String!, $avatarURL: String, $email: String!) {
     createUser(
@@ -92,14 +122,14 @@ export const CREATE_USER_MUTATION = gql`
       name: $name,
       avatarUrl: $avatarURL,
       email: $email,
-      beerCount:0,
+      beerCount : 0
     ) {
       id,
       uid,
       name,
       avatarUrl,
       beerCount,
-      email,
+      email
     }
   }
 `;

@@ -5,9 +5,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 
-
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { RankingPage } from '../pages/ranking/ranking';
 import { LoginPage } from '../pages/login/login';
 
 import { UserService } from '../services/user.service';
@@ -47,10 +47,11 @@ export class MyApp {
   },
   ];
 
+
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
     private userService:UserService, private storage: Storage, private menuCtrl: MenuController,
     public events: Events,public loadingCtrl: LoadingController, public alertCtrl: AlertController
-    ) 
+    )
   {
     this.listenToLoginEvents();
 
