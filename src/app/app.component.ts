@@ -37,10 +37,14 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
 
   appPages: PageInterface[] = [
-  // {
-  //   title: 'Mi perfil', description: 'Edit\u00e1 tu perfil de asociado',
-  //   component: ProfilePage, icon: 'coop-usuario'
-  // },
+  {
+    title: 'Home', description: 'Ver el Pagina Inicial',
+    component: RankingPage, icon: 'coop-usuario'
+  },
+  {
+    title: 'Ranking', description: 'Ver el Ranking',
+    component: RankingPage, icon: 'coop-usuario'
+  },
   {
     title: 'Salir', description: 'Salir de la aplicaci\u00f3n',
     component: LoginPage, icon: 'coop-exit', logsOut: true

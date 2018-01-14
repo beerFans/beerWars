@@ -1,14 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-<<<<<<< HEAD
 import { Camera } from '@ionic-native/camera';
-
-=======
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { IonicStorageModule } from '@ionic/storage';
->>>>>>> master
+
 
 import { MyApp } from './app.component';
 import { Configuration } from './app.constants';
@@ -47,7 +44,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     HomePage,
     ListPage,
-    RankingPage
+    RankingPage,
     LoginPage
   ],
   providers: [
