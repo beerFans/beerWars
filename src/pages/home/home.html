@@ -13,9 +13,11 @@
   beerCount
   nombre de la mesa -->
   <div *ngIf="joined && table">
-    <h3>{{table?.name}}</h3>
-    <h3>{{table?.beerCount}}</h3>
-    <h3>{{table?.id}}</h3>
+    <ion-card>
+      <img src="{table.picture}" />
+      <div class="card-title">{{table.name}}</div>
+      <div class="card-subtitle">{{table.beerCount}}</div>
+    </ion-card>
   </div>
   <h3>{{qrID}}</h3>
 
