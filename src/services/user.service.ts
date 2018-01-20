@@ -3,6 +3,7 @@ import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
 import { Events } from 'ionic-angular';
+import { Facebook } from '@ionic-native/facebook';
 
 // import { Configuration } from '../app/app.constants';
 // import { FacebookErrorHandler } from '../utils/facebook-error-handler';
@@ -21,7 +22,7 @@ export class UserService {
 
   constructor(
     public storage : Storage, public fire: AngularFireAuth, private events: Events,
-    private apollo : Apollo
+    private apollo : Apollo, private facebook: Facebook
     ) {
   }
 
@@ -46,13 +47,29 @@ export class UserService {
 
 
   loginWithFacebook(){
-    let permissions = [ 'public_profile', 'email' ];
+    // let permissions = [ 'public_profile', 'email' ];
     return new Promise((resolve, reject) => {
-      this.fire.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
-      .then((res)=>{
-        console.log("respuesta de firebase",res);
-        this.loginHandler(res);
-      })
+    //   this.fire.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+    //   .then((res)=>{
+    //     console.log("respuesta de firebase",res);
+    //     this.loginHandler(res);
+    //   })
+    // })
+    // let provider = new firebase.auth.FacebookAuthProvider();
+
+    // firebase.auth().signInWithRedirect(provider).then(()=>{
+    //   firebase.auth().getRedirectResult().then((result)=>{
+    //     console.log(result);
+    //   }).catch(function(error){
+    //     console.log(error);
+    //   })
+      let permissions = [ 'public_profile', 'email' ];
+      this.facebook.login(permissions).then((loginResponse)=>{
+        let credentials = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken)
+        firebase.auth().signInWithCredential(credentials).then((info)=>{
+          console.log(info);
+        }).catch((error)=>{console.log(error);})
+      }).catch((error)=>{console.log(error);})
     })
   }
 
