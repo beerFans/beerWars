@@ -7,20 +7,27 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding style="background: black;">
+<ion-content class="card-background-page" padding style="background: black;">
 
   <!-- Fotito
   beerCount
   nombre de la mesa -->
   <div *ngIf="joined && table">
-    <ion-card>
-      <img src="{table.picture}" />
-      <div class="card-title">{{table.name}}</div>
-      <div class="card-subtitle">{{table.beerCount}}</div>
+    <ion-card style="overflow: visible">
+      <img src="{{table.picture}}" style="width: 100vw"/>
+      <div class="card-title">Mesa numero 3</div>
+      <!-- <div class="card-title">{{table.name}}</div> -->
+      <div class="card-subtitle">Cervezas tomadas: {{table.beerCount}}</div>
+      <div *ngFor="let user of table.users">
+        <ion-item>
+          <ion-icon name="body" item-start large></ion-icon>
+          <h2>{{user.name}}</h2>
+          <ion-icon name="beer" small>  {{user.beerCount}}</ion-icon>
+        </ion-item>
+      </div>
     </ion-card>
   </div>
-  <h3>{{qrID}}</h3>
 
-  <button *ngIf="!joined" style="vertical-align: center;" ion-button text-center (click)="scanQR()">Unirse a una mesa</button>
+  <button *ngIf="!joined" style="vertical-align: center;" ion-button text-center (click)="joinTable()">Unirse a una mesa</button>
 
 </ion-content>

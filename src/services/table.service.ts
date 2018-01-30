@@ -60,7 +60,7 @@ export class TableService {
           }).subscribe((response) => {
             console.log('Mesa creada');
             let table = response.data.createTable;
-            this.joinTable(table.id, 'cjcb6ro4u2gfe0186nwwg3ev4');
+            this.joinTable(table.id, 'cjcdncsmbofde0149u2xjnk8c');
             this.storage.set('joined', true);
             this.storage.set('table', table);
             this.events.publish('user:joined');

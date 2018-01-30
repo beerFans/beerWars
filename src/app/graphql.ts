@@ -45,8 +45,11 @@ export const TABLE_QR_QUERY = gql`
       id
       name
       beerCount
+      picture
       users {
         name
+        avatarUrl
+        beerCount
       }
     }
   }
@@ -61,12 +64,14 @@ export const CREATE_TABLE_MUTATION = gql`
   mutation CreateTableMutation($QRId: String!) {
     createTable(
       qrID: $QRId,
-      beerCount: 0
+      beerCount: 0,
+      picture: "https://voiceofpeopletoday.com/wp-content/uploads/2017/11/Beer-kills-the-liver-study.jpg"
     ) {
       id
       qrID
       createdAt
       beerCount
+      picture
     }
   }
 `;
@@ -102,8 +107,12 @@ export const JOIN_TABLE_MUTATION = gql`
       },
       tableTable {
         id
+        picture
         users {
           id
+          name
+          avatarUrl
+          beerCount
         }
       }
     }
@@ -172,7 +181,8 @@ export const USER_TABLE_QUERY = gql`
         qrID,
         users{
           name,
-          avatarUrl
+          avatarUrl,
+          beerCount
         }
       }
     }
@@ -183,3 +193,39 @@ export interface UserTableQueryResponse {
   user: User;
   loading: boolean;
 };
+
+export const UPDATE_BEERS_TABLE = gql`
+  mutation updateBeers($id: ID!, $beerCount: Int!) {
+    updateTable(
+      id: $id,
+      beerCount: $beerCount
+    )
+    {
+      id
+      beerCount
+    }
+  }
+`;
+
+export interface UpdateBeersTableResponse {
+  updateTable: Table;
+  loading: boolean;
+};
+
+export const NEW_TABLE_SUBSCRIPTION = gql`{
+  subscription {
+    Table(filter: {
+      mutation_in : [CREATED]
+    }) {
+      node {
+        id
+        name
+        beerCount
+      }
+    }
+  }
+}`
+
+export interface NewTableSubscriptionResponse {
+  node: Table;
+}

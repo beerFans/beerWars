@@ -33,15 +33,17 @@ export class HomePage {
     });
   }
 
-  joinTable(qr) {
-    this.ts.getTableByQR(qr).then((table) => {
+  joinTable() {
+    this.ts.getTableByQR("cjchu17j3v51j01677gfrikvy").then((table) => {
       console.log(table);
       this.table = table;
+      this.joined = true;
     });
   }
 
   scanQR() {
-    // return new Promise((resolve, reject) => {
+
+
     var ionApp = <HTMLElement>document.getElementsByTagName("ion-app")[0];
 
     console.log('Preparando escaneo'); //Esto deberia encargarse de escanear el codigo y retornar el id
@@ -57,7 +59,7 @@ export class HomePage {
             this.qrScanner.hide(); // hide camera preview
             scanSub.unsubscribe(); // stop scanning
 
-            this.joinTable(text);
+            // this.joinTable(text);
 
 
           });
@@ -77,8 +79,6 @@ export class HomePage {
         }
       })
       .catch((e: any) => console.log('Error is', e));
-    // return 'cjc6rtajgn9dx0173uusnyhto';
-    // });
   }
 
 

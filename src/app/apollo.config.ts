@@ -1,30 +1,47 @@
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-// 1
 import {Apollo, ApolloModule} from 'apollo-angular';
 import {HttpLink, HttpLinkModule} from 'apollo-angular-link-http';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 
+//Reak time db imports
+import {getOperationAST} from 'graphql';
+import {WebSocketLink} from 'apollo-link-ws';
+import {ApolloLink} from 'apollo-link';
+
 
 @NgModule({
   exports: [
-    // 2
     HttpClientModule,
     ApolloModule,
     HttpLinkModule
   ]
 })
 export class GraphQLModule {
-  // 3
   constructor(apollo: Apollo, httpLink: HttpLink) {
 
-    // 4
     const uri = 'https://api.graph.cool/simple/v1/cjaoy20xd3avn01498ehx2atp';
     const http = httpLink.create({ uri });
 
-    // 6
+    const ws = new WebSocketLink({
+      uri: 'wss://subscriptions.graph.cool/v1/cjaoy20xd3avn01498ehx2atp',
+      options: {
+        reconect: true,
+        // connectionParams: {
+        //   authToken: localStorage.getItem(GC_AUTH_TOKEN),
+        // }
+      }
+    });
+
     apollo.create({
-      link: http,
+      link: ApolloLink.split(
+        operation => {
+          const operationAST = getOperationAST(operation.query, operation.operationName);
+          return !!operationAST && operationAST.operation === 'suscription';
+        },
+        ws,
+        http,
+      ),
       cache: new InMemoryCache()
     });
   }
