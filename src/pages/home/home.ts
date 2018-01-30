@@ -20,12 +20,12 @@ export class HomePage {
   public joined;
 
   constructor(private apollo: Apollo, public navCtrl: NavController,private ts:TableService, private userService: UserService) {
-    this.userService.getUser().then((user)=>{
-      this.user = user;
-      this.userService.isJoined(user.id).then((joined) => {
-        this.joined = joined;
-      })
-    })
+    // this.userService.getUser().then((user)=>{
+    //   this.user = user;
+    //   this.userService.isJoined(user.id).then((joined) => {
+    //     this.joined = joined;
+    //   })
+    // })
   }
 
 
