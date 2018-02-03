@@ -12,10 +12,11 @@ type User @model {
   createdAt: DateTime!  # optional system field (read-only)
   updatedAt: DateTime!  # optional system field (read-only)
 
-  name: String!
-  lastName: String!
-  avatarUrl: String!
-  beerCount: Int!
+  uid: String! @isUnique
+  name: String
+  avatarUrl: String
+  beerCount: Int
+  email: String
 
   table: Table @relation(name: "UserTable")
 

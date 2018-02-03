@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Table } from '../../app/types'
 
 /**
  * Generated class for the TablePage page.
@@ -15,7 +16,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class TablePage {
 
+  table : Table[];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.table = this.navParams.get('table');
   }
 
   ionViewDidLoad() {
