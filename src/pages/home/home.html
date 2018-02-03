@@ -28,6 +28,14 @@
     </div>
   </div>
 
-  <button *ngIf="!joined" style="vertical-align: center;" ion-button text-center (click)="scanQR()">Unirse a una mesa</button>
-
+  <div *ngIf="!joined" style="padding-top: 2em;">
+    <div text-center>
+      <h2 >BIENVENIDO</h2>
+      <h2 > A</h2>
+      <h2 > BEERWARS </h2>
+    </div>
+    <div style="padding-top: 4em;">
+      <button ion-button outline block (click)="scanQR()">Unirse a mesa</button>
+    </div>
+  </div>
 </ion-content>

@@ -57,24 +57,23 @@ export class MyApp {
     public events: Events,public loadingCtrl: LoadingController, public alertCtrl: AlertController
     )
   {
-    // this.listenToLoginEvents();
-    //
-    // userService.isLoggedIn().then((loggedIn) => {
-    //   platform.ready().then(() => {
-    //     if(loggedIn) {
-    //       this.userService.getUser().then((user) => {
-    //         this.user = user;
-    //       });
-    //       this.rootPage = HomePage;
-    //     } else {
-    //       this.menuCtrl.enable(false);
-    //       this.rootPage = LoginPage;
-    //     }
-    //     //}
-    //
-    //     setTimeout(() => { this.splashScreen.hide(); }, 2000);
-    //   });
-    // });
+    this.listenToLoginEvents();
+
+    userService.isLoggedIn().then((loggedIn) => {
+      platform.ready().then(() => {
+        if(loggedIn) {
+          this.userService.getUser().then((user) => {
+            this.user = user;
+          });
+          this.rootPage = HomePage;
+        } else {
+          this.menuCtrl.enable(false);
+          this.rootPage = LoginPage;
+        }
+
+        setTimeout(() => { this.splashScreen.hide(); }, 2000);
+      });
+    });
   }
 
   openPage(page: PageInterface) {

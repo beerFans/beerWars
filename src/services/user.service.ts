@@ -3,6 +3,11 @@ import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
 import { Events } from 'ionic-angular';
+import { Facebook } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
+
+
+import { Configuration } from '../app/app.constants';
 
 // import { Configuration } from '../app/app.constants';
 // import { FacebookErrorHandler } from '../utils/facebook-error-handler';
@@ -21,7 +26,7 @@ export class UserService {
 
   constructor(
     public storage : Storage, public fire: AngularFireAuth, private events: Events,
-    private apollo : Apollo
+    private apollo : Apollo, private facebook: Facebook, private googlePlus: GooglePlus
     ) {
   }
 
@@ -46,24 +51,58 @@ export class UserService {
 
 
   loginWithFacebook(){
-    let permissions = [ 'public_profile', 'email' ];
+    // let permissions = [ 'public_profile', 'email' ];
     return new Promise((resolve, reject) => {
-      this.fire.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
-      .then((res)=>{
-        console.log("respuesta de firebase",res);
-        this.loginHandler(res);
-      })
+    //   this.fire.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+    //   .then((res)=>{
+    //     console.log("respuesta de firebase",res);
+    //     this.loginHandler(res);
+    //   })
+    // })
+    // let provider = new firebase.auth.FacebookAuthProvider();
+
+    // firebase.auth().signInWithRedirect(provider).then(()=>{
+    //   firebase.auth().getRedirectResult().then((result)=>{
+    //     console.log(result);
+    //   }).catch(function(error){
+    //     console.log(error);
+    //   })
+      let permissions = [ 'public_profile', 'email' ];
+      this.facebook.login(permissions).then((loginResponse)=>{
+        let credentials = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken)
+        firebase.auth().signInWithCredential(credentials).then((info)=>{
+          console.log(info);
+        }).catch((error)=>{console.log(error);})
+      }).catch((error)=>{console.log(error);})
     })
   }
 
   loginWithGoogle(){
+    // return new Promise((resolve, reject) => {
+    //   this.fire.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+    //   .then((res)=>{
+    //     console.log(res);
+    //     this.loginHandler(res);
+    //   })
+    // })
+
+    let options = { 'webClientId': Configuration.GOOGLE_WEB_CLIENT_ID, 'offline': false };
     return new Promise((resolve, reject) => {
-      this.fire.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then((res)=>{
-        console.log(res);
-        this.loginHandler(res);
+      this.googlePlus.login(options).then(response => {
+        let credential = firebase.auth.GoogleAuthProvider.credential(response.idToken);
+        firebase.auth().signInWithCredential(credential).then((success) => {
+          // console.log("success"+JSON.stringify(success));
+          // console.log("response"+JSON.stringify(response));
+          this.storage.set('logged-in', true);
+          this.loginHandler(success);
+          //this.storage.set('user', user);
+          this.events.publish('user:login');
+          resolve(true);
+        })
       })
     })
+
+
   }
 
   logout() {
@@ -81,7 +120,7 @@ export class UserService {
   loginHandler(res){
     let user:User;
     //return new Promise((resolve,reject)=>{
-      this.getGraphUser(res.user.uid).then((userGraph)=>{
+      this.getGraphUser(res.uid).then((userGraph)=>{
         if (userGraph) {
           user = userGraph;
           console.log("user de graph",user);
@@ -94,16 +133,17 @@ export class UserService {
           this.apollo.mutate({
             mutation: CREATE_USER_MUTATION,
             variables:{
-              uid:res.user.uid,
-              name:res.user.displayName,
-              avatarURL:res.user.photoURL,
-              email: res.user.email
+              uid:res.uid,
+              name:res.displayName,
+              avatarURL:res.photoURL,
+              email: res.email
             },
             refetchQueries:['USER_UID_QUERY']
 
           }).subscribe((response)=>{
             console.log("response de create",response);
             user = response.data.User;
+            console.log("user",user)
             this.storage.set('logged-in', true);
             this.storage.set('user', response.data.createUser);
             this.events.publish('user:login');

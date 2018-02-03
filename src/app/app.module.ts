@@ -5,6 +5,8 @@ import { Camera } from '@ionic-native/camera';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { IonicStorageModule } from '@ionic/storage';
+import { Facebook } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 
 import { MyApp } from './app.component';
@@ -56,7 +58,9 @@ import { PipesModule } from '../pipes/pipes.module'
     SplashScreen,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserService
+    UserService,
+    Facebook,
+    GooglePlus
   ]
 })
 export class AppModule {}

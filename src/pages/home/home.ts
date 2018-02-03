@@ -21,7 +21,6 @@ export class HomePage {
   public joined;
   public qrID;
 
-
   constructor(private apollo: Apollo, public navCtrl: NavController,private ts:TableService, private userService: UserService, private qrScanner: QRScanner) {
     this.userService.getUser().then((user)=>{
       this.user = user;
