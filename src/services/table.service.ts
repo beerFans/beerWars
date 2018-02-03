@@ -2,25 +2,30 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Apollo } from 'apollo-angular';
 import { Events } from 'ionic-angular';
-
 import { Table } from '../app/types'
+import {UserService} from './user.service'
+
 import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, JOIN_TABLE_MUTATION, CreateTableMutationResponse } from '../app/graphql';
 
 
 @Injectable()
 export class TableService {
+  public user;
 
-  constructor(private apollo: Apollo, private storage: Storage, private events: Events) {
+  constructor(private apollo: Apollo, private storage: Storage, private events: Events, private us: UserService) {
+    this.us.getUser().then((user) => {
+      this.user = user;
+    });
 
   }
 
   getTables() {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
       console.log("Buscando mesas");
       this.apollo.watchQuery<any>({
         query: ALL_TABLES_QUERY
       }).valueChanges.subscribe((response) => {
-        console.log(response.data.allTables);
+        // console.log(response.data.allTables);
         resolve(response);
       });
     });
@@ -41,13 +46,14 @@ export class TableService {
         console.log(response);
 
         if (table) {
-          this.joinTable(table.id, 'cjcdncsmbofde0149u2xjnk8c'); //user.service.getUser().then((user) => { this.joinTable(table.id, user.id) })
-          this.storage.set('joined', true);
-          this.storage.set('table', table);
-          this.events.publish('user:joined');
-          console.log('Ya existia la mesa, uniendose');
-          console.log('fin unirse a mesa existente');
-          resolve(table);
+
+            this.joinTable(table.id, this.user.id);
+            this.storage.set('joined', true);
+            this.storage.set('table', table);
+            this.events.publish('user:joined');
+            console.log('Ya existia la mesa, uniendose');
+            console.log('fin unirse a mesa existente');
+            resolve(table);
         }
         else {
           console.log('No existia mesa, creando mesa');
@@ -56,11 +62,11 @@ export class TableService {
             variables: {
               QRId: QRId,
             },
-            refetchQueries: ['TableQRQuery','AllTablesQuery']
+            refetchQueries: ['TableQRQuery', 'AllTablesQuery']
           }).subscribe((response) => {
             console.log('Mesa creada');
             let table = response.data.createTable;
-            this.joinTable(table.id, 'cjcdncsmbofde0149u2xjnk8c');
+            this.joinTable(table.id, this.user.id);
             this.storage.set('joined', true);
             this.storage.set('table', table);
             this.events.publish('user:joined');
@@ -86,7 +92,7 @@ export class TableService {
       variables: {
         userId: userId,
         tableId: tableId,
-    }
+      }
     }).subscribe((response) => {
       console.log('Agregado usuario a mesa');
       console.log(response);

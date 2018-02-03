@@ -23,13 +23,12 @@ export class GraphQLModule {
     const uri = 'https://api.graph.cool/simple/v1/cjaoy20xd3avn01498ehx2atp';
     const http = httpLink.create({ uri });
 
+
     const ws = new WebSocketLink({
-      uri: 'wss://subscriptions.graph.cool/v1/cjaoy20xd3avn01498ehx2atp',
+      uri: `wss://subscriptions.graph.cool/v1/cjaoy20xd3avn01498ehx2atp`,
       options: {
-        reconect: true,
-        // connectionParams: {
-        //   authToken: localStorage.getItem(GC_AUTH_TOKEN),
-        // }
+        reconnect: true,
+        timeout: 30000
       }
     });
 
@@ -37,7 +36,7 @@ export class GraphQLModule {
       link: ApolloLink.split(
         operation => {
           const operationAST = getOperationAST(operation.query, operation.operationName);
-          return !!operationAST && operationAST.operation === 'suscription';
+          return !!operationAST && operationAST.operation === 'subscription';
         },
         ws,
         http,

@@ -16,11 +16,11 @@ export const ALL_LINKS_QUERY = gql`
 export interface AllLinkQueryResponse {
   allLinks: Link[];
   loading: boolean;
-};
+}
 
 export const ALL_TABLES_QUERY = gql`
   query AllTablesQuery {
-    allTables {
+    allTables(orderBy: beerCount_DESC) {
       id
       name
       beerCount
@@ -35,7 +35,7 @@ export const ALL_TABLES_QUERY = gql`
 export interface AllTableQueryResponse {
   allTables: Table[];
   loading: boolean;
-};
+}
 
 export const TABLE_QR_QUERY = gql`
   query TableQRQuery($qrID: String!){
@@ -58,7 +58,7 @@ export const TABLE_QR_QUERY = gql`
 export interface TableQRQueryResponse {
   table: Table;
   loading: boolean;
-};
+}
 
 export const CREATE_TABLE_MUTATION = gql`
   mutation CreateTableMutation($QRId: String!) {
@@ -79,7 +79,7 @@ export const CREATE_TABLE_MUTATION = gql`
 export interface CreateTableMutationResponse {
   createTable: Table;
   loading: boolean;
-};
+}
 
 export const CREATE_QR_MUTATION = gql`
   mutation CreateQRMutation {
@@ -93,7 +93,7 @@ export const CREATE_QR_MUTATION = gql`
 export interface CreateQRMutationResponse {
   createTable: Table;
   loading: boolean;
-};
+}
 
 export const JOIN_TABLE_MUTATION = gql`
   mutation JoinTableMutation($userId: ID!, $tableId: ID!) {
@@ -122,7 +122,7 @@ export const JOIN_TABLE_MUTATION = gql`
 export interface JoinTableMutationResponse {
   table: Table;
   loading: boolean;
-};
+}
 
 export const CREATE_USER_MUTATION = gql`
   mutation CreateUserMutation($uid: String!, $name: String!, $avatarURL: String, $email: String!) {
@@ -146,7 +146,7 @@ export const CREATE_USER_MUTATION = gql`
 export interface CreateUserMutationResponse {
   user: User;
   loading: boolean;
-};
+}
 
 export const USER_UID_QUERY = gql`
   query UserUidQuery($uid: String!){
@@ -166,7 +166,7 @@ export const USER_UID_QUERY = gql`
 export interface UserUidQueryResponse {
   user: User;
   loading: boolean;
-};
+}
 
 export const USER_TABLE_QUERY = gql`
   query UserTableQuery($id: ID!){
@@ -192,7 +192,7 @@ export const USER_TABLE_QUERY = gql`
 export interface UserTableQueryResponse {
   user: User;
   loading: boolean;
-};
+}
 
 export const UPDATE_BEERS_TABLE = gql`
   mutation updateBeers($id: ID!, $beerCount: Int!) {
@@ -210,9 +210,9 @@ export const UPDATE_BEERS_TABLE = gql`
 export interface UpdateBeersTableResponse {
   updateTable: Table;
   loading: boolean;
-};
+}
 
-export const NEW_TABLE_SUBSCRIPTION = gql`{
+export const NEW_TABLE_SUBSCRIPTION = gql`
   subscription {
     Table(filter: {
       mutation_in : [CREATED]
@@ -221,11 +221,61 @@ export const NEW_TABLE_SUBSCRIPTION = gql`{
         id
         name
         beerCount
+        users {
+          id
+        }
       }
     }
   }
-}`
+  `;
 
 export interface NewTableSubscriptionResponse {
+  node: Table;
+}
+
+export const UPDATE_TABLE_SUBSCRIPTION = gql`
+  subscription {
+    Table(filter: {
+      mutation_in : [UPDATED]
+    }) {
+      node {
+        id
+        name
+        beerCount
+        users {
+          id
+        }
+      }
+    }
+  }
+`;
+
+export interface UpdateTableSubscriptionResponse {
+  node: Table;
+}
+
+export const UPDATE_USER_TABLE_SUBSCRIPTION = gql`
+  subscription ($tableId: ID!){
+    Table(filter: {
+      node: {
+        id: $tableId
+      }
+      mutation_in : [UPDATED]
+    }) {
+      node {
+        id
+        name
+        beerCount
+        users {
+          id
+          name
+          beerCount
+        }
+      }
+    }
+  }
+`;
+
+export interface UpdateTableSubscriptionResponse {
   node: Table;
 }

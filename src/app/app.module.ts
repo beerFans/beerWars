@@ -23,6 +23,9 @@ import {GraphQLModule} from './apollo.config';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { PipesModule } from '../pipes/pipes.module'
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -34,6 +37,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   imports: [
     BrowserModule,
     GraphQLModule,
+    PipesModule,
     IonicModule.forRoot(MyApp),
     AngularFireAuthModule,
     AngularFireModule.initializeApp(Configuration.FIREBASE_CONFIG),

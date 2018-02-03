@@ -18,16 +18,16 @@
       <div class="card-title">Mesa numero 3</div>
       <!-- <div class="card-title">{{table.name}}</div> -->
       <div class="card-subtitle">Cervezas tomadas: {{table.beerCount}}</div>
-      <div *ngFor="let user of table.users">
-        <ion-item>
-          <ion-icon name="body" item-start large></ion-icon>
-          <h2>{{user.name}}</h2>
-          <ion-icon name="beer" small>  {{user.beerCount}}</ion-icon>
-        </ion-item>
-      </div>
     </ion-card>
+    <div *ngFor="let user of table.users">
+      <ion-item>
+        <ion-icon name="body" item-start large></ion-icon>
+        <h2>{{user.name}}</h2>
+        <ion-icon name="beer" small>  {{user.beerCount}}</ion-icon>
+      </ion-item>
+    </div>
   </div>
 
-  <button *ngIf="!joined" style="vertical-align: center;" ion-button text-center (click)="joinTable()">Unirse a una mesa</button>
+  <button *ngIf="!joined" style="vertical-align: center;" ion-button text-center (click)="scanQR()">Unirse a una mesa</button>
 
 </ion-content>

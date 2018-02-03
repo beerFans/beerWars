@@ -33,8 +33,8 @@ export class HomePage {
     });
   }
 
-  joinTable() {
-    this.ts.getTableByQR("cjchu17j3v51j01677gfrikvy").then((table) => {
+  joinTable(qr) {
+    this.ts.getTableByQR(qr).then((table) => {
       console.log(table);
       this.table = table;
       this.joined = true;
@@ -59,7 +59,7 @@ export class HomePage {
             this.qrScanner.hide(); // hide camera preview
             scanSub.unsubscribe(); // stop scanning
 
-            // this.joinTable(text);
+            this.joinTable(text);
 
 
           });
@@ -80,6 +80,8 @@ export class HomePage {
       })
       .catch((e: any) => console.log('Error is', e));
   }
+
+  
 
 
 
