@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Table } from '../../app/types'
 import { TableService } from '../../services/table.service';
 import { Apollo } from 'apollo-angular';
-import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, JOIN_TABLE_MUTATION, NEW_TABLE_SUBSCRIPTION, UPDATE_TABLE_SUBSCRIPTION,AllTableQueryResponse } from '../../app/graphql';
+import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, NEW_TABLE_SUBSCRIPTION, UPDATE_TABLE_SUBSCRIPTION,AllTableQueryResponse } from '../../app/graphql';
 import {Subscription} from 'rxjs/Subscription';
 
 

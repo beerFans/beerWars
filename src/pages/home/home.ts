@@ -1,12 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { NavController } from 'ionic-angular';
-import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, CreateTableMutationResponse } from '../../app/graphql';
+// import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, CreateTableMutationResponse } from '../../app/graphql';
 import { TableService } from '../../services/table.service';
 import { UserService } from '../../services/user.service';
 
 import { Table, User } from '../../app/types'
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+
+import {Subscription} from 'rxjs/Subscription';
+
+import { TABLE_QUERY, TableQueryResponse, UPDATE_USER_TABLE_SUBSCRIPTION } from '../../app/graphql';
+
+
 
 
 @Component({
@@ -21,12 +27,22 @@ export class HomePage {
   public joined;
   public qrID;
 
+  subscriptions: Subscription[] = [];
+
+
   constructor(private apollo: Apollo, public navCtrl: NavController,private ts:TableService, private userService: UserService, private qrScanner: QRScanner) {
     this.userService.getUser().then((user)=>{
       this.user = user;
       if(user){
         this.userService.isJoined(user.id).then((joined) => {
           this.joined = joined;
+          if(joined) {
+            this.userService.getUserTable().then((table) => {
+              console.log(table);
+              this.table = table;
+              this.realTimeSubscribe();
+            })
+          }
         })
       }
     });
@@ -37,6 +53,8 @@ export class HomePage {
       console.log(table);
       this.table = table;
       this.joined = true;
+      this.ts.updateTable(this.table.id);
+      this.realTimeSubscribe();
     });
   }
 
@@ -80,7 +98,56 @@ export class HomePage {
       .catch((e: any) => console.log('Error is', e));
   }
 
-  
+  realTimeSubscribe() {
+    const TableQuery = this.apollo.watchQuery<TableQueryResponse>({
+      query: TABLE_QUERY,
+      variables: {
+        id: this.table.id
+      },
+    });
+    console.log("Subscribing to updates on table: "+this.table.id);
+
+    TableQuery.subscribeToMore({
+      document: UPDATE_USER_TABLE_SUBSCRIPTION,
+      variables: {
+        tableId: this.table.id
+      },
+      updateQuery: (previous: TableQueryResponse, { subscriptionData }) => {
+        console.log(subscriptionData);
+        if ((<any>subscriptionData).data.Table.node) {
+          console.log("cambio en mesa");
+            let newTable = (<any>subscriptionData).data.Table.node;
+          return {
+            ...previous,
+            Table: newTable
+          }
+        }
+        else {
+          return {
+            ...previous,
+            Table: this.table
+          }
+        }
+      }
+    });
+
+    const querySubscription = TableQuery.valueChanges.subscribe((response) => {
+      console.log('response');
+      console.log(response);
+      // if(response.data.table) {
+        this.table = response.data.Table;
+      // }
+    });
+
+    this.subscriptions = [...this.subscriptions, querySubscription];
+
+  }
+
+  changeName() {
+    
+  }
+
+
 
 
 

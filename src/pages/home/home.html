@@ -18,6 +18,13 @@
       <div class="card-title">Mesa numero 3</div>
       <!-- <div class="card-title">{{table.name}}</div> -->
       <div class="card-subtitle">Cervezas tomadas: {{table.beerCount}}</div>
+      <ion-fab right bottom>
+        <button ion-fab mini color="light"><ion-icon name="more"></ion-icon></button>
+        <ion-fab-list side="left">
+          <button ion-fab (click)="changePicture()"><ion-icon name="camera"></ion-icon></button>
+          <button ion-fab (click)="changeName()"><ion-icon name="create"></ion-icon></button>
+        </ion-fab-list>
+      </ion-fab>
     </ion-card>
     <div *ngFor="let user of table.users">
       <ion-item>

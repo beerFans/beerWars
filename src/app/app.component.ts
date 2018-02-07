@@ -31,7 +31,7 @@ export interface PageInterface {
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any;
   public user: User;
 
   pages: Array<{title: string, component: any}>;
@@ -74,6 +74,7 @@ export class MyApp {
         setTimeout(() => { this.splashScreen.hide(); }, 2000);
       });
     });
+    // this.rootPage = HomePage;
   }
 
   openPage(page: PageInterface) {

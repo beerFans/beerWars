@@ -22,7 +22,7 @@ import { CREATE_USER_MUTATION, USER_UID_QUERY, USER_TABLE_QUERY } from '../app/g
 @Injectable()
 export class UserService {
 
-  private actionUrl: string;
+  // private actionUrl: string;
 
   constructor(
     public storage : Storage, public fire: AngularFireAuth, private events: Events,
@@ -127,7 +127,7 @@ export class UserService {
           this.storage.set('logged-in', true);
           this.storage.set('user', user);
           this.events.publish('user:login');
-          //resolve(true);          
+          //resolve(true);
         }
         else{
           this.apollo.mutate({
@@ -181,8 +181,8 @@ export class UserService {
 
         if (response.data.User.table) {
           console.log("user table",response.data.User);
-          // this.storage.set('joined', true);
-          // this.storage.set('table', response.data.table);
+          this.storage.set('joined', true);
+          this.storage.set('table', response.data.User.table);
           // this.events.publish('user:joined');
           this.storage.get('joined').then((value) => resolve(value === true));
         }
@@ -191,6 +191,18 @@ export class UserService {
         }
       })
     }).catch((error)=> {console.log(error)})
+  }
+
+  getUserTable() {
+    return this.storage.get('table').then((value) => {
+      //mirarrrrrrrrrrrrr
+      return value;
+    })
+  }
+
+  exitTable() {
+    this.storage.set('joined', false);
+    //Aca seguro van mas cosas!!!
   }
 
 

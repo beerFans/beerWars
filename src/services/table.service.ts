@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Apollo } from 'apollo-angular';
 import { Events } from 'ionic-angular';
-import { Table } from '../app/types'
 import {UserService} from './user.service'
 
-import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, JOIN_TABLE_MUTATION, CreateTableMutationResponse } from '../app/graphql';
+import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, JOIN_TABLE_MUTATION, FAKE_UPDATE_TABLE_MUTATION } from '../app/graphql';
 
 
 @Injectable()
@@ -97,6 +96,18 @@ export class TableService {
       console.log('Agregado usuario a mesa');
       console.log(response);
       console.log('fin agregar usuario0');
+    })
+  }
+
+  updateTable(tableId) {
+    this.apollo.mutate({
+      mutation: FAKE_UPDATE_TABLE_MUTATION,
+      variables: {
+        tableId: tableId,
+        dummy: "Fake update"
+      }
+    }).subscribe((response) => {
+      console.log("Fake update");
     })
   }
 }

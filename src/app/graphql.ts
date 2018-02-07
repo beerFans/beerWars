@@ -1,4 +1,4 @@
-import { Table, User, Waiter, Link } from './types';
+import { Table, User, Link } from './types';
 import gql from 'graphql-tag';
 
 
@@ -34,6 +34,29 @@ export const ALL_TABLES_QUERY = gql`
 
 export interface AllTableQueryResponse {
   allTables: Table[];
+  loading: boolean;
+}
+
+export const TABLE_QUERY = gql`
+  query TableQuery($id: ID!){
+    Table(
+      id: $id
+    ) {
+      id
+      name
+      beerCount
+      picture
+      users {
+        name
+        avatarUrl
+        beerCount
+      }
+    }
+  }
+`;
+
+export interface TableQueryResponse {
+  Table: Table;
   loading: boolean;
 }
 
@@ -266,10 +289,12 @@ export const UPDATE_USER_TABLE_SUBSCRIPTION = gql`
         id
         name
         beerCount
+        picture
         users {
           id
           name
           beerCount
+          avatarUrl
         }
       }
     }
@@ -278,4 +303,22 @@ export const UPDATE_USER_TABLE_SUBSCRIPTION = gql`
 
 export interface UpdateTableSubscriptionResponse {
   node: Table;
+}
+
+
+export const FAKE_UPDATE_TABLE_MUTATION = gql`
+  mutation fakeUpdateTable($tableId: ID!, $dummy: String!) {
+    updateTable(
+      id: $tableId,
+      dummy: $dummy
+    )
+    {
+      id
+    }
+  }
+`;
+
+export interface FakeUpdateTableResponse {
+  updateTable: Table;
+  loading: boolean;
 }

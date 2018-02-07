@@ -36,6 +36,8 @@ type Table @model {
   waiter: Waiter @relation (name: "WaitersTables")
   users: [User!]! @relation(name: "UserTable")
 
+  dummy: String
+
 }
 
 type QR @model {
