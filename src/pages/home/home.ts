@@ -7,11 +7,18 @@ import { UserService } from '../../services/user.service';
 
 import { Table, User } from '../../app/types'
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
 
 import {Subscription} from 'rxjs/Subscription';
 
 import { TABLE_QUERY, TableQueryResponse, UPDATE_USER_TABLE_SUBSCRIPTION } from '../../app/graphql';
 
+import { AlertController } from 'ionic-angular';
+
+
+
+declare var cordova: any;
 
 
 
@@ -26,16 +33,24 @@ export class HomePage {
   public user: User;
   public joined;
   public qrID;
+  imageChosen: any = 0;
+  imagePath: any;
+  imageNewPath: any;
 
   subscriptions: Subscription[] = [];
 
+  public loading = true;
 
-  constructor(private apollo: Apollo, public navCtrl: NavController,private ts:TableService, private userService: UserService, private qrScanner: QRScanner) {
+  
+
+
+  constructor(private camera: Camera, private apollo: Apollo, public navCtrl: NavController,private ts:TableService, private userService: UserService, private qrScanner: QRScanner, private alertCtrl: AlertController) {
     this.userService.getUser().then((user)=>{
       this.user = user;
       if(user){
         this.userService.isJoined(user.id).then((joined) => {
           this.joined = joined;
+          this.loading = false;
           if(joined) {
             this.userService.getUserTable().then((table) => {
               console.log(table);
@@ -144,7 +159,86 @@ export class HomePage {
   }
 
   changeName() {
+      let alert = this.alertCtrl.create({
+        title: 'Cambiar Nombre de la mesa',
+        inputs: [
+          {
+            name: 'tableName',
+            placeholder: 'Escribe aqui el nuevo nombre'
+          },
+        ],
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Guardar',
+            handler: data => {
+              this.ts.changeName(this.table.id, data.tableName);
+            }
+          }
+        ]
+      });
+      alert.present();
     
+  }
+
+  changePicture() {
+    
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      targetWidth: 500,
+      targetHeight: 500
+    }
+    
+    this.camera.getPicture(options).then((imgUrl) => {
+      
+      console.log(imgUrl);
+
+      let base64Image = 'data:image/jpeg;base64,' + imgUrl;
+
+      this.ts.changePicture(this.table.id, base64Image);
+
+
+    }, (err) => {
+      alert(JSON.stringify(err));
+    });
+  }
+
+  exitTable() {
+    let alert = this.alertCtrl.create({
+      title: 'Confirmar salida',
+      message: 'Seguro que deseas salir de la mesa?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Confirmar',
+          handler: () => {
+            console.log('Buy clicked');
+            this.ts.exitTable(this.table.id).then((data) => {
+              if(data) {
+                this.table = null;
+                this.joined = false;
+              }
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 

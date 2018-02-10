@@ -37,4 +37,19 @@
     overflow: hidden;
     background-color: color($colors, bc);
   }
+ 
+}
+
+div[loading] {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+
+  ion-spinner * {
+    width: 60px;
+    height: 60px;
+  }
 }

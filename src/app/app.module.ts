@@ -13,7 +13,6 @@ import { MyApp } from './app.component';
 import { Configuration } from './app.constants';
 
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { RankingPage } from '../pages/ranking/ranking';
 import { TablePage } from '../pages/table/table';
@@ -32,7 +31,6 @@ import { PipesModule } from '../pipes/pipes.module'
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
     LoginPage,
     RankingPage
   ],
@@ -49,7 +47,6 @@ import { PipesModule } from '../pipes/pipes.module'
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
     RankingPage,
     LoginPage
   ],

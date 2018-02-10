@@ -14,13 +14,23 @@
 
 
 <ion-content padding>
-  <h4 *ngIf="loading">Loading...</h4>
-  <ion-list>
+  <div *ngIf="loading" loading>
+    <img src="assets/imgs/beerFillGif.gif">
+  </div>
+  <ion-list *ngIf="!loading">
+    <ion-item>
+      <ion-grid>
+          <ion-row>
+            <ion-col col-9>Equipo</ion-col>
+            <ion-col text-right	col-3>Cervezas</ion-col>
+          </ion-row>
+      </ion-grid>
+    </ion-item>
     <div *ngFor="let table of allTables">
       <ion-item (click)="goToTable(table)">
         <ion-grid>
           <ion-row>
-            <ion-col col-9>{{table.id}}</ion-col>
+            <ion-col col-9>{{table.name}}</ion-col>
             <ion-col text-right	col-3>{{table.beerCount}}</ion-col>
           </ion-row>
         </ion-grid>

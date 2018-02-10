@@ -4,7 +4,7 @@ import { Apollo } from 'apollo-angular';
 import { Events } from 'ionic-angular';
 import {UserService} from './user.service'
 
-import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, JOIN_TABLE_MUTATION, FAKE_UPDATE_TABLE_MUTATION } from '../app/graphql';
+import { REMOVE_USER_FROM_TABLE_MUTATION, CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, JOIN_TABLE_MUTATION, FAKE_UPDATE_TABLE_MUTATION, UPDATE_TABLE_NAME_MUTATION, UPDATE_TABLE_PICTURE_MUTATION } from '../app/graphql';
 
 
 @Injectable()
@@ -110,4 +110,51 @@ export class TableService {
       console.log("Fake update");
     })
   }
+
+  changeName(id, name) {
+    this.apollo.mutate({
+      mutation: UPDATE_TABLE_NAME_MUTATION,
+      variables: {
+        tableId: id,
+        tableName: name
+      }
+    }).subscribe((response) => {
+      console.log(response);
+    })
+  }
+
+  changePicture(id, picture) {
+    this.apollo.mutate({
+      mutation: UPDATE_TABLE_PICTURE_MUTATION,
+      variables: {
+        tableId: id,
+        tablePicture: picture
+      }
+    }).subscribe((response) => {
+      console.log(response);
+    })
+  }
+
+  exitTable(tableId) {
+    return new Promise((resolve,reject) => {
+      this.apollo.mutate({
+        mutation: REMOVE_USER_FROM_TABLE_MUTATION,
+        variables: {
+          tableId: tableId,
+          userId: this.user.id
+        }
+      }).subscribe((response) => {
+        console.log(response);
+        if(response.data.removeFromUserTable.usersUser.id == this.user.id) {
+          resolve(true);
+          this.storage.set('joined', false);
+          this.storage.set('table', null);
+        }
+        else {
+          resolve(false);
+        }
+      })
+    });
+  }
+
 }

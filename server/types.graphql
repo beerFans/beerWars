@@ -1,12 +1,3 @@
-type Link @model {
-  id: ID! @isUnique     # required system field (read-only)
-  createdAt: DateTime!  # optional system field (read-only)
-  updatedAt: DateTime!  # optional system field (read-only)
-
-  description: String!
-  url: String!
-}
-
 type User @model {
   id: ID! @isUnique     # required system field (read-only)
   createdAt: DateTime!  # optional system field (read-only)
@@ -46,6 +37,7 @@ type QR @model {
   updatedAt: DateTime!  # optional system field (read-only)
 
   table: Table @relation(name: "TableQR")
+  description: String! @isUnique
 
 }
 

@@ -1,22 +1,5 @@
-import { Table, User, Link } from './types';
+import { Table, User } from './types';
 import gql from 'graphql-tag';
-
-
-export const ALL_LINKS_QUERY = gql`
-  query AllLinksQuery {
-    allLinks {
-      id
-      createdAt
-      url
-      description
-    }
-  }
-`;
-
-export interface AllLinkQueryResponse {
-  allLinks: Link[];
-  loading: boolean;
-}
 
 export const ALL_TABLES_QUERY = gql`
   query AllTablesQuery {
@@ -24,8 +7,11 @@ export const ALL_TABLES_QUERY = gql`
       id
       name
       beerCount
+      picture
       users {
         id
+        name
+        beerCount
       }
     }
   }
@@ -88,7 +74,8 @@ export const CREATE_TABLE_MUTATION = gql`
     createTable(
       qrID: $QRId,
       beerCount: 0,
-      picture: "https://voiceofpeopletoday.com/wp-content/uploads/2017/11/Beer-kills-the-liver-study.jpg"
+      picture: "https://voiceofpeopletoday.com/wp-content/uploads/2017/11/Beer-kills-the-liver-study.jpg",
+      name: "Sin nombre"
     ) {
       id
       qrID
@@ -105,10 +92,13 @@ export interface CreateTableMutationResponse {
 }
 
 export const CREATE_QR_MUTATION = gql`
-  mutation CreateQRMutation {
-    createQR
+  mutation CreateQRMutation ($description: String!){
+    createQR(
+      description: $description
+    )
     {
-      id
+      id,
+      description
     }
   }
 `;
@@ -244,8 +234,11 @@ export const NEW_TABLE_SUBSCRIPTION = gql`
         id
         name
         beerCount
+        picture
         users {
           id
+          name
+          beerCount
         }
       }
     }
@@ -301,7 +294,7 @@ export const UPDATE_USER_TABLE_SUBSCRIPTION = gql`
   }
 `;
 
-export interface UpdateTableSubscriptionResponse {
+export interface UpdateUserTableSubscriptionResponse {
   node: Table;
 }
 
@@ -322,3 +315,60 @@ export interface FakeUpdateTableResponse {
   updateTable: Table;
   loading: boolean;
 }
+
+
+export const UPDATE_TABLE_NAME_MUTATION = gql`
+  mutation UpdateTableName($tableId: ID!, $tableName: String!) {
+    updateTable(
+      id: $tableId,
+      name: $tableName
+    )
+    {
+      id
+    }
+  }
+`;
+
+export interface UpdateTableNameResponse {
+  updateTable: Table;
+  loading: boolean;
+}
+
+export const UPDATE_TABLE_PICTURE_MUTATION = gql`
+  mutation UpdateTablePicture($tableId: ID!, $tablePicture: String!) {
+    updateTable(
+      id: $tableId,
+      picture: $tablePicture
+    )
+    {
+      id
+    }
+  }
+`;
+
+export interface UpdateTablePictureResponse {
+  updateTable: Table;
+  loading: boolean;
+}
+
+
+export const REMOVE_USER_FROM_TABLE_MUTATION = gql`
+  mutation($userId: ID!, $tableId: ID!) {
+    removeFromUserTable(
+      tableTableId: $tableId,
+      usersUserId: $userId
+    )
+    {
+      usersUser {
+        id
+        name
+      }
+    }
+}
+`;
+
+export interface UpdateTablePictureResponse {
+  updateTable: Table;
+  loading: boolean;
+}
+

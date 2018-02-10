@@ -20,11 +20,11 @@
   nombre de la mesa -->
   <div>
     <ion-card style="overflow: visible">
-      <img src="{{table.picture}}" style="width: 100vw"/>
-      <div class="card-title">Mesa numero 3</div>
-      <!-- <div class="card-title">{{table.name}}</div> -->
+      <img src="{{table.picture}}" style="width: 100vw ; height: 40vh"/>
+      <div *ngIf="table.name != null" class="card-title">{{table.name}}</div>
       <div class="card-subtitle">Cervezas tomadas: {{table.beerCount}}</div>
     </ion-card>
+    
     <div *ngFor="let user of table.users">
       <ion-item>
         <ion-icon name="body" item-start large></ion-icon>
