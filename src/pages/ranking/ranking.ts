@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Table } from '../../app/types'
 import { TableService } from '../../services/table.service';
 import { Apollo } from 'apollo-angular';
-import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, NEW_TABLE_SUBSCRIPTION, UPDATE_TABLE_SUBSCRIPTION,AllTableQueryResponse } from '../../app/graphql';
+import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, NEW_TABLE_SUBSCRIPTION, 
+  DELETE_TABLE_SUBSCRIPTION,UPDATE_TABLE_SUBSCRIPTION,AllTableQueryResponse } from '../../app/graphql';
 import {Subscription} from 'rxjs/Subscription';
 
 
@@ -82,6 +83,32 @@ export class RankingPage {
             ...previous.allTables
           ]
           newAllTables = this.sort(newAllTables);
+          return {
+            ...previous,
+            allTables: newAllTables
+          }
+        }
+        else {
+          return {
+            ...previous
+          }
+        }
+      }
+    });
+
+    allTablesQuery.subscribeToMore({
+      document: DELETE_TABLE_SUBSCRIPTION,
+      updateQuery: (previous: AllTableQueryResponse, { subscriptionData }) => {
+        console.log(subscriptionData);
+        if ((<any>subscriptionData).data.Table) {
+          console.log("mesa eliminada", (<any>subscriptionData).data);
+          let index = this.allTables.findIndex(x=> x.id === (<any>subscriptionData).data.Table.previousValues.id)
+          let newAllTables = [...this.allTables];
+          console.log("index", index);
+          if(index !== -1){
+            newAllTables.splice(index,1);
+          }
+          console.log("New all tables",newAllTables);
           return {
             ...previous,
             allTables: newAllTables

@@ -187,7 +187,9 @@ export class UserService {
           this.storage.get('joined').then((value) => resolve(value === true));
         }
         else{
-          this.storage.get('joined').then((value) => resolve(value === false));
+          this.storage.set('joined', false);
+          resolve(false);
+
         }
       })
     }).catch((error)=> {console.log(error)})

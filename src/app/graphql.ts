@@ -249,6 +249,23 @@ export interface NewTableSubscriptionResponse {
   node: Table;
 }
 
+export const DELETE_TABLE_SUBSCRIPTION = gql`
+  subscription {
+    Table(filter: {
+      mutation_in : [DELETED]
+    }) {
+      mutation
+    	previousValues {
+      	id
+   		}
+    }
+  }
+  `;
+
+export interface DeleteTableSubscriptionResponse {
+  node: Table;
+}
+
 export const UPDATE_TABLE_SUBSCRIPTION = gql`
   subscription {
     Table(filter: {
@@ -297,6 +314,8 @@ export const UPDATE_USER_TABLE_SUBSCRIPTION = gql`
 export interface UpdateUserTableSubscriptionResponse {
   node: Table;
 }
+
+
 
 
 export const FAKE_UPDATE_TABLE_MUTATION = gql`
