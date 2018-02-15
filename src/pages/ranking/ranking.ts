@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Table } from '../../app/types'
 import { TableService } from '../../services/table.service';
 import { Apollo } from 'apollo-angular';
-import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, NEW_TABLE_SUBSCRIPTION, 
+import { ALL_TABLES_QUERY, NEW_TABLE_SUBSCRIPTION, 
   DELETE_TABLE_SUBSCRIPTION,UPDATE_TABLE_SUBSCRIPTION,AllTableQueryResponse } from '../../app/graphql';
 import {Subscription} from 'rxjs/Subscription';
 
@@ -27,8 +27,7 @@ export class RankingPage {
   public loading: boolean = true;
   shownTable: Table;
   subscriptions: Subscription[] = [];
-  field = "beerCount";
-  orderType = 'NONE';
+  
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private ts: TableService, private apollo: Apollo) {

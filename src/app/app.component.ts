@@ -38,15 +38,15 @@ export class MyApp {
   appPages: PageInterface[] = [
   {
     title: 'Home', description: 'Ver el Pagina Inicial',
-    component: RankingPage, icon: 'coop-usuario'
+    component: HomePage, icon: 'home'
   },
   {
     title: 'Ranking', description: 'Ver el Ranking',
-    component: RankingPage, icon: 'coop-usuario'
+    component: RankingPage, icon: 'trophy'
   },
   {
     title: 'Salir', description: 'Salir de la aplicaci\u00f3n',
-    component: LoginPage, icon: 'coop-exit', logsOut: true
+    component: LoginPage, icon: 'exit', logsOut: true
   },
   ];
 
@@ -73,7 +73,6 @@ export class MyApp {
         setTimeout(() => { this.splashScreen.hide(); }, 2000);
       });
     });
-    // this.rootPage = HomePage;
   }
 
   openPage(page: PageInterface) {
