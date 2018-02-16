@@ -69,8 +69,8 @@ export class MyApp {
           this.menuCtrl.enable(false);
           this.rootPage = LoginPage;
         }
-
-        setTimeout(() => { this.splashScreen.hide(); }, 2000);
+        this.splashScreen.hide();
+        // setTimeout(() => { this.splashScreen.hide(); }, 2000);
       });
     });
   }

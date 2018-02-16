@@ -18,7 +18,8 @@
   beerCount
   nombre de la mesa -->
   <div *ngIf="loading" loading>
-    <img src="assets/imgs/beerFillGif.gif">
+    <!-- <img src="assets/imgs/beerFillGif.gif"> -->
+    <ion-spinner></ion-spinner>
   </div>
   <div *ngIf="!loading">
     <div *ngIf="joined && table">
