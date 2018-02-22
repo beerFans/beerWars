@@ -16,6 +16,7 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { RankingPage } from '../pages/ranking/ranking';
 import { TablePage } from '../pages/table/table';
+import { ProfilePage } from '../pages/profile/profile';
 
 import { UserService } from '../services/user.service';
 
@@ -32,7 +33,8 @@ import { PipesModule } from '../pipes/pipes.module'
     MyApp,
     HomePage,
     LoginPage,
-    RankingPage
+    RankingPage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,8 @@ import { PipesModule } from '../pipes/pipes.module'
     MyApp,
     HomePage,
     RankingPage,
-    LoginPage
+    LoginPage,
+    ProfilePage
   ],
   providers: [
     StatusBar,

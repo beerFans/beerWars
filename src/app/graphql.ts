@@ -391,3 +391,20 @@ export interface UpdateTablePictureResponse {
   loading: boolean;
 }
 
+export const UPDATE_IMAGE_USER = gql`
+  mutation updateImageUser($id: ID!, $img: String!) {
+    updateUser(
+      id: $id,
+      avatarUrl: $img
+    )
+    {
+      avatarUrl
+    }
+  }
+`;
+
+export interface UpdateImageUserResponse {
+  updateUser: User;
+  loading: boolean;
+}
+

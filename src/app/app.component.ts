@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 import { HomePage } from '../pages/home/home';
 import { RankingPage } from '../pages/ranking/ranking';
 import { LoginPage } from '../pages/login/login';
+import { ProfilePage } from '../pages/profile/profile';
 
 import { UserService } from '../services/user.service';
 
@@ -43,6 +44,10 @@ export class MyApp {
   {
     title: 'Ranking', description: 'Ver el Ranking',
     component: RankingPage, icon: 'trophy'
+  },
+  {
+    title: 'Profile', description: 'Ver el Ranking',
+    component: ProfilePage, icon: 'trophy'
   },
   {
     title: 'Salir', description: 'Salir de la aplicaci\u00f3n',
