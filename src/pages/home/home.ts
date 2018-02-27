@@ -12,7 +12,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import {Subscription} from 'rxjs/Subscription';
 
-import { TABLE_QUERY, TableQueryResponse, UPDATE_USER_TABLE_SUBSCRIPTION } from '../../app/graphql';
+import { TABLE_QUERY, TableQueryResponse, UPDATE_USER_TABLE_SUBSCRIPTION, DELETE_USER_TABLE_SUBSCRIPTION } from '../../app/graphql';
 
 import { AlertController } from 'ionic-angular';
 
@@ -146,16 +146,52 @@ export class HomePage {
       }
     });
 
+    TableQuery.subscribeToMore({
+      document: DELETE_USER_TABLE_SUBSCRIPTION,
+      variables: {
+        tableId: this.table.id
+      },
+      updateQuery: (previous: TableQueryResponse, { subscriptionData }) => {
+        console.log(subscriptionData);
+        if ((<any>subscriptionData).data.Table.previousValues.id) {
+          console.log("mesa eliminada");
+            let newTable = null;
+          return {
+            ...previous,
+            Table: newTable
+          }
+        }
+        else {
+          return {
+            ...previous,
+            Table: this.table
+          }
+        }
+      }
+    });
+
     const querySubscription = TableQuery.valueChanges.subscribe((response) => {
       console.log('response');
       console.log(response);
-      // if(response.data.table) {
+      if(response.data.Table) {
         this.table = response.data.Table;
-      // }
+      }
+      else {
+        this.mesaCerrada();
+      }
     });
 
     this.subscriptions = [...this.subscriptions, querySubscription];
 
+  }
+
+  mesaCerrada() {
+    let alert = this.alertCtrl.create({
+      title: 'Mesa cerrado',
+      subTitle: 'Tu mesa ha sido cerrada',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
   changeName() {
@@ -190,12 +226,12 @@ export class HomePage {
   changePicture() {
     
     const options: CameraOptions = {
-      quality: 100,
+      quality: 75,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      targetWidth: 500,
-      targetHeight: 500
+      targetWidth: 800,
+      targetHeight: 600
     }
     
     this.camera.getPicture(options).then((imgUrl) => {

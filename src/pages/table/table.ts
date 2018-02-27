@@ -70,6 +70,7 @@ export class TablePage {
       }
     });
 
+
     const querySubscription = TableQuery.valueChanges.subscribe((response) => {
       console.log('response');
       console.log(response);

@@ -15,7 +15,23 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+@font-face {
+    font-family: 'Open Sans';
+    font-weight: 400;
+    font-style: normal;
+    src: url('../assets/fonts/Open_Sans/OpenSans-SemiBold.ttf');
+}
+body, span, button, h1, h2, h3, h4, h5, h6, p, ion-item, ion-title {
+  font-family: 'Open Sans', sans-serif !important;
+}
+  // body {
+  //     font-family: Ormont_Light !important;
+  // }
 
+  .ion-content {
+    background: linear-gradient(to bottom, #3a404d, #181c26);
+
+  }
 .avatar {
   position: absolute;
   max-width: 100px;

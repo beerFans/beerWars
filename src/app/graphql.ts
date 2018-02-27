@@ -315,6 +315,26 @@ export interface UpdateUserTableSubscriptionResponse {
   node: Table;
 }
 
+export const DELETE_USER_TABLE_SUBSCRIPTION = gql`
+  subscription ($tableId: ID!){
+    Table(filter: {
+      node: {
+        id: $tableId
+      }
+      mutation_in : [DELETED]
+    }) {
+      mutation
+    	previousValues {
+        id
+      }
+    }
+  }
+`;
+
+export interface DeleteUserTableSubscriptionResponse {
+  node: Table;
+}
+
 
 
 

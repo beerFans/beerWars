@@ -10,7 +10,6 @@ import { AlertController, LoadingController, ModalController, ViewController } f
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',

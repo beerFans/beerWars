@@ -13,14 +13,14 @@
 </ion-header>
 
 
-<ion-content class="card-background-page" padding style="background: black;">
+<ion-content class="card-background-page">
 
   <!-- Fotito
   beerCount
   nombre de la mesa -->
   <div>
     <ion-card style="overflow: visible">
-      <img src="{{table.picture}}" style="width: 100vw ; height: 40vh"/>
+      <img src="{{table.picture}}" style="width: 100vw ; height: auto"/>
       <div *ngIf="table.name != null" class="card-title">{{table.name}}</div>
       <div class="card-subtitle">Cervezas tomadas: {{table.beerCount}}</div>
     </ion-card>
@@ -29,7 +29,7 @@
       <ion-item>
         <ion-icon name="body" item-start large></ion-icon>
         <h2>{{user.name}}</h2>
-        <ion-icon name="beer" small>  {{user.beerCount}}</ion-icon>
+        <ion-icon name="beer" small>{{user.beerCount}}</ion-icon>
       </ion-item>
     </div>
   </div>

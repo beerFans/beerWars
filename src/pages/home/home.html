@@ -24,7 +24,7 @@
   <div *ngIf="!loading">
     <div *ngIf="joined && table">
       <ion-card style="overflow: visible">
-        <img src="{{table.picture}}" style="width: 100vw ; height: 40vh"/>
+        <img src="{{table.picture}}" style="width: 100vw ; height: auto"/>
         <div *ngIf="table.name != null" class="card-title">{{table.name}}</div>
         <div class="card-subtitle">Cervezas tomadas: {{table.beerCount}}</div>
         <ion-fab right bottom>

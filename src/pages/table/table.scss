@@ -12,6 +12,8 @@ page-table {
     ion-card {
       position: relative;
       text-align: center;
+      margin: 0;
+      width: 100%;
     }
 
     .card-title {
@@ -30,9 +32,11 @@ page-table {
       width: 100%;
       color: #fff;
     }
+    background: linear-gradient(to bottom, #3a404d, #181c26);
+
   }
 
-  ion-content {
-    background: transparent !important;
-  }
+  // ion-content {
+  //   background: transparent !important;
+  // }
 }
