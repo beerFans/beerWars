@@ -411,3 +411,18 @@ export interface UpdateTablePictureResponse {
   loading: boolean;
 }
 
+
+export const QR_QUERY = gql`
+  query QRQuery($description: String!){
+    QR(
+      description: $description
+    ) {
+      id
+    }
+  }
+`;
+
+// export interface QRQueryResponse {
+//   QR: QR;
+//   loading: boolean;
+// }

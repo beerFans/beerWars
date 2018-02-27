@@ -4,7 +4,9 @@ import { Apollo } from 'apollo-angular';
 import { Events } from 'ionic-angular';
 import {UserService} from './user.service'
 
-import { REMOVE_USER_FROM_TABLE_MUTATION, CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, JOIN_TABLE_MUTATION, FAKE_UPDATE_TABLE_MUTATION, UPDATE_TABLE_NAME_MUTATION, UPDATE_TABLE_PICTURE_MUTATION } from '../app/graphql';
+import { REMOVE_USER_FROM_TABLE_MUTATION, CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, 
+        TABLE_QR_QUERY, JOIN_TABLE_MUTATION, FAKE_UPDATE_TABLE_MUTATION, UPDATE_TABLE_NAME_MUTATION, 
+        UPDATE_TABLE_PICTURE_MUTATION, QR_QUERY } from '../app/graphql';
 
 
 @Injectable()
@@ -55,26 +57,55 @@ export class TableService {
             resolve(table);
         }
         else {
-          console.log('No existia mesa, creando mesa');
-          this.apollo.mutate({
-            mutation: CREATE_TABLE_MUTATION,
-            variables: {
-              QRId: QRId,
-            },
-            refetchQueries: ['TableQRQuery', 'AllTablesQuery']
-          }).subscribe((response) => {
-            console.log('Mesa creada');
-            let table = response.data.createTable;
-            this.joinTable(table.id, this.user.id);
-            this.storage.set('joined', true);
-            this.storage.set('table', table);
-            this.events.publish('user:joined');
-            console.log('Fin union a mesa creada');
-            resolve(table);
-          });
+          this.validQR(QRId).then((res) => {
+            console.log("res ",res);
+            if(!res) {
+              reject('QR Invalido');
+            }
+            else {
+              console.log('No existia mesa, creando mesa');
+              this.apollo.mutate({
+                mutation: CREATE_TABLE_MUTATION,
+                variables: {
+                  QRId: QRId,
+                },
+                refetchQueries: ['TableQRQuery', 'AllTablesQuery']
+              }).subscribe((response) => {
+                console.log('Mesa creada');
+                let table = response.data.createTable;
+                this.joinTable(table.id, this.user.id);
+                this.storage.set('joined', true);
+                this.storage.set('table', table);
+                this.events.publish('user:joined');
+                console.log('Fin union a mesa creada');
+                resolve(table);
+              });
+            }
+          });   
         }
       });
     });
+  }
+
+  validQR(id) {
+    return new Promise((resolve, reject) => {
+      this.apollo.watchQuery<any>({
+        query: QR_QUERY,
+        variables: {
+          description: id,
+        },
+      }).valueChanges.subscribe((response) => {  
+          let qr = response.data.QR;
+          // console.log("qr response", response);
+          if(qr) {
+            resolve(true);
+          }
+          else {
+            resolve(false);
+          }
+      });
+    })
+    
   }
 
   getTable() {

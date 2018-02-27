@@ -70,6 +70,8 @@ export class HomePage {
       this.joined = true;
       this.ts.updateTable(this.table.id);
       this.realTimeSubscribe();
+    },(error) => {
+      this.errorAlert(error);
     });
   }
 
@@ -187,7 +189,7 @@ export class HomePage {
 
   mesaCerrada() {
     let alert = this.alertCtrl.create({
-      title: 'Mesa cerrado',
+      title: 'Mesa cerrada',
       subTitle: 'Tu mesa ha sido cerrada',
       buttons: ['OK']
     });
@@ -273,6 +275,15 @@ export class HomePage {
           }
         }
       ]
+    });
+    alert.present();
+  }
+
+  errorAlert(msj) {
+    let alert = this.alertCtrl.create({
+      title: 'QR Invalido',
+      subTitle: 'El QR escaneado parece no ser valido',
+      buttons: ['OK']
     });
     alert.present();
   }
