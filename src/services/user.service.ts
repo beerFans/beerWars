@@ -17,7 +17,7 @@ import { Configuration } from '../app/app.constants';
 // import { User } from '../models/user.model';
 import { User } from '../app/types';
 import { Apollo } from 'apollo-angular';
-import { CREATE_USER_MUTATION, USER_UID_QUERY, USER_TABLE_QUERY } from '../app/graphql';
+import { CREATE_USER_MUTATION, USER_UID_QUERY, USER_TABLE_QUERY, UPDATE_IMAGE_USER } from '../app/graphql';
 
 @Injectable()
 export class UserService {
@@ -205,6 +205,31 @@ export class UserService {
   exitTable() {
     this.storage.set('joined', false);
     //Aca seguro van mas cosas!!!
+  }
+
+  setProfileImg(img, userId){
+    return new Promise((resolve, reject) => {
+      this.apollo.mutate<any>({
+        mutation: UPDATE_IMAGE_USER,
+        variables: {
+          id: userId,
+          img: img
+        },
+      }).subscribe((response) => {
+        // 5
+        console.log(response);
+        if (response.data.updateUser.avatarUrl) {
+          console.log("user",response.data.updateUser);
+          this.getUser().then((user:User)=>{
+            user.avatarUrl = response.data.updateUser.avatarUrl;
+            this.storage.set('user', user);
+          })
+          resolve(response.data.updateUser.avatarUrl);
+        }
+        else{
+        }
+      })
+    }).catch((error)=> {console.log(error)})
   }
 
 

@@ -1,4 +1,32 @@
 page-table {
+
+  .userPic {
+    border-radius: 100%;
+    width: 45px;
+    height: auto;
+  }
+
+  ion-item {
+    // background: linear-gradient(to top, #37474F, #181c26);
+
+    h2, label, ion-icon{
+      color: #fff;
+    }
+
+    &:nth-child(2n-1) {
+      background: #37474F;
+    }
+
+    &:nth-child(2n) {
+      background: #455A64;
+    }
+
+   
+  }
+
+
+
+
   .my-card .item.item-image {
     width: 100vw;
     margin-left: -10px;
@@ -32,7 +60,7 @@ page-table {
       width: 100%;
       color: #fff;
     }
-    background: linear-gradient(to bottom, #3a404d, #181c26);
+    background: linear-gradient(to bottom, #455A64, #37474F);
 
   }
 

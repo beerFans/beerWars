@@ -300,6 +300,7 @@ export const UPDATE_USER_TABLE_SUBSCRIPTION = gql`
         name
         beerCount
         picture
+        qrID
         users {
           id
           name
@@ -426,3 +427,20 @@ export const QR_QUERY = gql`
 //   QR: QR;
 //   loading: boolean;
 // }
+
+export const UPDATE_IMAGE_USER = gql`
+  mutation updateImageUser($id: ID!, $img: String!) {
+    updateUser(
+      id: $id,
+      avatarUrl: $img
+    )
+    {
+      avatarUrl
+    }
+  }
+`;
+
+export interface UpdateImageUserResponse {
+  updateUser: User;
+  loading: boolean;
+}

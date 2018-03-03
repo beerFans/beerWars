@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 import { HomePage } from '../pages/home/home';
 import { RankingPage } from '../pages/ranking/ranking';
 import { LoginPage } from '../pages/login/login';
+import { TabsPage } from '../pages/tabs/tabs';
 
 import { UserService } from '../services/user.service';
 
@@ -59,19 +60,20 @@ export class MyApp {
     this.listenToLoginEvents();
 
     userService.isLoggedIn().then((loggedIn) => {
-      platform.ready().then(() => {
-        if(loggedIn) {
-          this.userService.getUser().then((user) => {
-            this.user = user;
-          });
-          this.rootPage = HomePage;
-        } else {
-          this.menuCtrl.enable(false);
-          this.rootPage = LoginPage;
-        }
+      // platform.ready().then(() => {
+      //   if(loggedIn) {
+      //     this.userService.getUser().then((user) => {
+      //       this.menuCtrl.enable(false);
+      //       this.user = user;
+      //     });
+          this.rootPage = RankingPage;
+      //   } else {
+      //     this.menuCtrl.enable(false);
+      //     this.rootPage = LoginPage;
+      //   }
         this.splashScreen.hide();
     //     setTimeout(() => { this.splashScreen.hide(); }, 2000);
-      });
+      // });
     });
   }
 
@@ -96,7 +98,7 @@ export class MyApp {
     this.events.subscribe('user:login', () => {
     //let loader = this.loadingCtrl.create({ dismissOnPageChange: true });
     //loader.present();
-    this.nav.setRoot(HomePage).then(() => {
+    this.nav.setRoot(TabsPage).then(() => {
       this.userService.getUser().then((user) => {
         this.user = user;
         //loader.dismiss().then(() => {});

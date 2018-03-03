@@ -1,5 +1,9 @@
 page-ranking {
   font-family: 'Open Sans', sans-serif;  
+  ion-content {
+    background: linear-gradient(to bottom, #3a404d, #181c26);
+  }
+  .toolbar-background { background-color: #263238 !important; }
 
 //   $animation-time: 0.4s;
 // $colors:
@@ -424,7 +428,8 @@ Leaderboard
         width: 20px;
         height: 20px;
         line-height: 20px;
-        color: #c24448;
+        // color: #c24448;
+        color: #303030;
         background: #fff;
         border-radius: 20px;
         text-align: center;
@@ -486,15 +491,18 @@ Leaderboard
         opacity: 0;
       }
 
-      &:nth-child(3n-2) {
-        background: #fa6855;
-        &::after {
-          background: #fa6855;
-        }
-      }
+      // &:nth-child(3n-2) {
+      //   // background: #fa6855;
+      //   background: #303030;
+        
+      //   &::after {
+      //     background: #fa6855;
+      //   }
+      // }
 
-      &:nth-child(3n-1) {
-        background: #e0574f;
+      &:nth-child(2n-1) {
+        // background: #e0574f;
+        background: #37474F;
         &::after {
           background: #e0574f;
           box-shadow: 0 2px 0 rgba(0, 0, 0, .08);
@@ -508,8 +516,9 @@ Leaderboard
         }
       }
 
-      &:nth-child(3n) {
-        background: #d7514d;
+      &:nth-child(2n) {
+        // background: #d7514d;
+        background: #455A64;
         &::after {
           background: #d7514d;
           box-shadow: 0 1px 0 rgba(0, 0, 0, .11);
@@ -540,24 +549,24 @@ Leaderboard
       //   }
       // }
 
-      &:last-child {
-        background: #c24448;
-        border-radius: 0 0 10px 10px;
-        &::after {
-          background: #c24448;
-          box-shadow: 0 -2.5px 0 rgba(0, 0, 0, .12);
-          border-radius: 0 0 10px 10px;
-        }
+      // &:last-child {
+      //   background: #c24448;
+      //   border-radius: 0 0 10px 10px;
+      //   &::after {
+      //     background: #c24448;
+      //     box-shadow: 0 -2.5px 0 rgba(0, 0, 0, .12);
+      //     border-radius: 0 0 10px 10px;
+      //   }
 
-        & mark {
-          &::before, &::after {
-            top: -9px;
-            bottom: auto;
-            border-top: none;
-            border-bottom: 8px solid #993639;
-          }
-        }
-      }
+      //   & mark {
+      //     &::before, &::after {
+      //       top: -9px;
+      //       bottom: auto;
+      //       border-top: none;
+      //       border-bottom: 8px solid #993639;
+      //     }
+      //   }
+      // }
 
     }
 

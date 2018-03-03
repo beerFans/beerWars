@@ -134,6 +134,9 @@ export class HomePage {
         if ((<any>subscriptionData).data.Table.node) {
           console.log("cambio en mesa");
             let newTable = (<any>subscriptionData).data.Table.node;
+            if(!newTable.qrID) {
+              newTable = null;
+            }
           return {
             ...previous,
             Table: newTable
@@ -180,6 +183,7 @@ export class HomePage {
       }
       else {
         this.mesaCerrada();
+        this.joined = false;
       }
     });
 

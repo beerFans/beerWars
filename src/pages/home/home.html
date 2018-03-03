@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -10,9 +10,9 @@
       </button>
     </ion-buttons>
   </ion-navbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content class="card-background-page" padding style="background: black;">
+<ion-content class="card-background-page">
 
   <!-- Fotito
   beerCount
@@ -27,6 +27,11 @@
         <img src="{{table.picture}}" style="width: 100vw ; height: auto"/>
         <div *ngIf="table.name != null" class="card-title">{{table.name}}</div>
         <div class="card-subtitle">Cervezas tomadas: {{table.beerCount}}</div>
+        <ion-fab right top>
+          <button ion-fab mini color="light" (click)="exitTable()">
+            <ion-icon name="exit"></ion-icon>
+          </button>
+        </ion-fab>
         <ion-fab right bottom>
           <button ion-fab mini color="light"><ion-icon name="settings"></ion-icon></button>
           <ion-fab-list side="left">
@@ -38,7 +43,9 @@
       
       <div *ngFor="let user of table.users">
         <ion-item>
-          <ion-icon name="body" item-start large></ion-icon>
+          <!-- <ion-icon name="body" item-start large></ion-icon> -->
+          <img src="{{user.avatarUrl}}" item-start alt=""/>
+
           <h2>{{user.name}}</h2>
           <ion-icon name="beer" small>  {{user.beerCount}}</ion-icon>
         </ion-item>
@@ -47,13 +54,14 @@
     </div>
 
     <div *ngIf="!joined" style="padding-top: 2em;">
-      <div text-center>
-        <h2 >BIENVENIDO</h2>
-        <h2 > A</h2>
-        <h2 > BEERWARS </h2>
+      <div style="color:white" text-center>
+        <h1>BIENVENIDO A BEERWARS</h1>
+        <!-- <h2 > A</h2>
+        <h2 > BEERWARS </h2> -->
+        <h3 style="bottom:50px;" >Escanea el codigo en tu mesa para ingresar</h3>
       </div>
-      <div style="padding-top: 4em;">
-        <button ion-button outline block (click)="scanQR()">Unirse a mesa</button>
+      <div text-center style="bottom:40px">
+        <button ion-button outline round (click)="scanQR()" color="light">Unirse a una mesa</button>
       </div>
     </div>
   </div>
