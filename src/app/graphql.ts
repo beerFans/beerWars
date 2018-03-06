@@ -8,6 +8,7 @@ export const ALL_TABLES_QUERY = gql`
       name
       beerCount
       picture
+      qrID
       users {
         id
         name
@@ -235,6 +236,7 @@ export const NEW_TABLE_SUBSCRIPTION = gql`
         name
         beerCount
         picture
+        qrID
         users {
           id
           name
@@ -275,6 +277,7 @@ export const UPDATE_TABLE_SUBSCRIPTION = gql`
         id
         name
         beerCount
+        qrID
         users {
           id
         }

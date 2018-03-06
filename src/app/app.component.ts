@@ -60,20 +60,19 @@ export class MyApp {
     this.listenToLoginEvents();
 
     userService.isLoggedIn().then((loggedIn) => {
-      // platform.ready().then(() => {
-      //   if(loggedIn) {
-      //     this.userService.getUser().then((user) => {
-      //       this.menuCtrl.enable(false);
-      //       this.user = user;
-      //     });
-          this.rootPage = RankingPage;
-      //   } else {
-      //     this.menuCtrl.enable(false);
-      //     this.rootPage = LoginPage;
-      //   }
+      platform.ready().then(() => {
+        if(loggedIn) {
+          this.userService.getUser().then((user) => {
+            this.menuCtrl.enable(false);
+            this.user = user;
+          });
+          this.rootPage = TabsPage;
+        } else {
+          this.menuCtrl.enable(false);
+          this.rootPage = LoginPage;
+        }
         this.splashScreen.hide();
-    //     setTimeout(() => { this.splashScreen.hide(); }, 2000);
-      // });
+      });
     });
   }
 

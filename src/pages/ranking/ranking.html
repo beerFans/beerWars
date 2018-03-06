@@ -47,7 +47,7 @@
         <ion-list>
           <ion-item no-lines *ngFor="let table of allTables" (click)="goToTable(table)">
             <mark>{{table.name}}</mark>
-            <small>{{table.beerCount}}</small>
+            <small item-end>{{table.beerCount}}</small>
           </ion-item>
         </ion-list>
       </div>

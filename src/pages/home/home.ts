@@ -12,13 +12,20 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import {Subscription} from 'rxjs/Subscription';
 
-import { TABLE_QUERY, TableQueryResponse, UPDATE_USER_TABLE_SUBSCRIPTION, DELETE_USER_TABLE_SUBSCRIPTION } from '../../app/graphql';
+import { TABLE_QUERY, TableQueryResponse, UPDATE_USER_TABLE_SUBSCRIPTION, 
+  DELETE_USER_TABLE_SUBSCRIPTION, TABLE_QR_QUERY } from '../../app/graphql';
 
 import { AlertController } from 'ionic-angular';
+import { TabsPage } from '../tabs/tabs';
+import { InMemoryCache } from 'apollo-cache-inmemory/lib/inMemoryCache';
 
+import {ApolloClient} from 'apollo-client';
+
+const cache = new InMemoryCache();
 
 
 declare var cordova: any;
+
 
 
 
@@ -36,10 +43,12 @@ export class HomePage {
   imageChosen: any = 0;
   imagePath: any;
   imageNewPath: any;
+  querySubscription: any;
 
   subscriptions: Subscription[] = [];
 
   public loading = true;
+
 
   
 
@@ -122,6 +131,7 @@ export class HomePage {
         id: this.table.id
       },
     });
+
     console.log("Subscribing to updates on table: "+this.table.id);
 
     TableQuery.subscribeToMore({
@@ -184,11 +194,21 @@ export class HomePage {
       else {
         this.mesaCerrada();
         this.joined = false;
+        this.navCtrl.parent.select(2);
       }
     });
 
-    this.subscriptions = [...this.subscriptions, querySubscription];
+    // querySubscription.unsubscribe();
 
+    this.subscriptions = [...this.subscriptions, querySubscription];
+    this.querySubscription = querySubscription;
+
+  }
+
+  ionViewWillLeave() {
+    console.log("unsubscribe");
+    this.querySubscription.unsubscribe();
+    this.apollo.getClient().resetStore();
   }
 
   mesaCerrada() {
@@ -198,6 +218,10 @@ export class HomePage {
       buttons: ['OK']
     });
     alert.present();
+    for (let sub of this.subscriptions) {
+      sub.unsubscribe();
+    }
+    // this.apollo.getClient().resetStore();
   }
 
   changeName() {
@@ -274,6 +298,9 @@ export class HomePage {
               if(data) {
                 this.table = null;
                 this.joined = false;
+                for (let sub of this.subscriptions) {
+                  sub.unsubscribe();
+                }
               }
             });
           }

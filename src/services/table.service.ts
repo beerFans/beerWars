@@ -6,7 +6,7 @@ import {UserService} from './user.service'
 
 import { REMOVE_USER_FROM_TABLE_MUTATION, CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, 
         TABLE_QR_QUERY, JOIN_TABLE_MUTATION, FAKE_UPDATE_TABLE_MUTATION, UPDATE_TABLE_NAME_MUTATION, 
-        UPDATE_TABLE_PICTURE_MUTATION, QR_QUERY } from '../app/graphql';
+        UPDATE_TABLE_PICTURE_MUTATION, QR_QUERY, TableQRQueryResponse } from '../app/graphql';
 
 
 @Injectable()
@@ -33,8 +33,11 @@ export class TableService {
   }
 
   getTableByQR(QRId) {
+
     return new Promise((resolve, reject) => {
       console.log('Buscando Mesa ' + QRId);
+
+      let sub =
       this.apollo.watchQuery<any>({
         query: TABLE_QR_QUERY,
         variables: {
@@ -84,7 +87,9 @@ export class TableService {
           });   
         }
       });
-    });
+      // sub.unsubscribe();
+    }
+  );
   }
 
   validQR(id) {

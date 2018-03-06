@@ -41,13 +41,12 @@
         </ion-fab>
       </ion-card>
       
-      <div *ngFor="let user of table.users">
-        <ion-item>
+      <div>
+        <ion-item no-lines *ngFor="let user of table.users">
           <!-- <ion-icon name="body" item-start large></ion-icon> -->
-          <img src="{{user.avatarUrl}}" item-start alt=""/>
-
+          <img class="userPic" src="{{user.avatarUrl}}" item-start alt=""/>
           <h2>{{user.name}}</h2>
-          <ion-icon name="beer" small>  {{user.beerCount}}</ion-icon>
+          <ion-icon name="beer" small>{{user.beerCount}}</ion-icon>
         </ion-item>
       </div>
       
