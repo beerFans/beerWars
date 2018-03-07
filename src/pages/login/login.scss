@@ -2,21 +2,31 @@ page-login {
 
     ion-content {
         // background: linear-gradient(to bottom, #3a404d, #181c26);
-        background-image: url('../assets/imgs/wood-background4.jpeg');
+        background-image: url('../assets/imgs/wood-background.jpg');
         background-size: cover;
     }
+    .login{
+        height: 100%;
+        ion-grid {
+            height: 80%;
+            justify-content: flex-end;
+            padding-bottom: 50px; 
+        }
+    }
 
-    ion-grid {
-        height: 80%;
-        justify-content: flex-end;
-        padding-bottom: 50px; 
+    .connection {
+        height: 100%;
+        justify-content: center;
+        font-size: 1em;
+        color: white;
     }
 
     .title {
         height: auto;
         padding-top: 50px; 
         font-size: 50px;
-        color: rgb(171, 179, 184);
+        // color: rgb(0, 0, 0);
+        color: rgb(255, 255, 255);
         text-shadow: 5px 1px 0 black;
     }
 }

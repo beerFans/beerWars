@@ -17,7 +17,17 @@
   <div *ngIf="loading" loading>
     <ion-spinner></ion-spinner>
   </div>
-  <div *ngIf="!loading">
+
+  <ion-grid *ngIf="!connection">
+    <ion-row>
+      <ion-icon style="display: block; position: absolute; left: 47%;" name="warning"></ion-icon>
+    </ion-row>
+    <ion-row>
+      <ion-label text-center >Verifique su Conexión </ion-label>
+    </ion-row>
+  </ion-grid>
+
+  <div *ngIf="!loading && connection">
     <div *ngIf="joined && table">
       <ion-card style="overflow: visible">
         <img src="{{table.picture}}" style="width: 100vw ; height: auto"/>
@@ -50,13 +60,13 @@
 
     <div *ngIf="!joined" style="padding-top: 2em;">
       <div style="color:white" text-center>
-        <h1>BIENVENIDO A BEERWARS</h1>
+        <h1 class="title">BEERWARS</h1>
         <!-- <h2 > A</h2>
         <h2 > BEERWARS </h2> -->
-        <h3 >Escanea el codigo en tu mesa para ingresar</h3>
+        <!-- <h3 >Escanea el codigo en tu mesa para ingresar</h3> -->
       </div>
       <div class="footer" text-center>
-        <button class="button-bottom" ion-button outline round (click)="scanQR()" color="light">Unirse a una mesa</button>
+        <button class="button-bottom" ion-button round (click)="scanQR()" color="light">Unirse a una mesa</button>
       </div>
     </div>
   </div>

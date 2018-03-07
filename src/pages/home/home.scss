@@ -1,5 +1,12 @@
 page-home {
 
+  ion-grid {
+    height: 100%;
+    justify-content: center;
+    font-size: 1em;
+    color: white;
+  }
+
   .button-bottom {
     vertical-align: bottom;
   }
@@ -16,7 +23,20 @@ page-home {
     bottom: 0px;
     margin-bottom: 20px;
     width: 100%;
+
+    div {
+      background: #303030;
+    }
   }
+
+  .title {
+    height: auto;
+    // padding-top: 50px; 
+    font-size: 50px;
+    // color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    text-shadow: 5px 1px 0 black;
+  } 
 
   ion-item {
     // background: linear-gradient(to top, #37474F, #181c26);
@@ -25,13 +45,15 @@ page-home {
       color: #fff;
     }
 
-    &:nth-child(2n-1) {
-      background: #37474F;
-    }
+    // &:nth-child(2n-1) {
+    //   background: #37474F;
+    // }
 
-    &:nth-child(2n) {
-      background: #455A64;
-    }
+    // &:nth-child(2n) {
+    //   background: #455A64;
+    // }
+
+    background: transparent !important;
 
    
   }
@@ -74,7 +96,10 @@ page-home {
   }
 
   ion-content {
-    background: linear-gradient(to bottom, #3a404d, #181c26);
+    // background: linear-gradient(to bottom, #3a404d, #181c26);
+    background-image: url('../assets/imgs/wood-background.jpg');
+    background-size: cover;
+    
   }
 
   // ion-content {

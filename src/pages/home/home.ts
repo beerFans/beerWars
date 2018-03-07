@@ -21,6 +21,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory/lib/inMemoryCache';
 
 import {ApolloClient} from 'apollo-client';
 
+import { Network } from '@ionic-native/network';
+
 const cache = new InMemoryCache();
 
 
@@ -49,11 +51,29 @@ export class HomePage {
 
   public loading = true;
 
+  connection = true;
+  connectSubscription;
 
   
 
 
-  constructor(private camera: Camera, private apollo: Apollo, public navCtrl: NavController,private ts:TableService, private userService: UserService, private qrScanner: QRScanner, private alertCtrl: AlertController) {
+  constructor(private network: Network, private camera: Camera, private apollo: Apollo, public navCtrl: NavController,private ts:TableService, private userService: UserService, private qrScanner: QRScanner, private alertCtrl: AlertController) {
+    if(this.network.type === 'none'){
+      this.connection = false;
+      this.loading = false;
+      this.connectSubscription = this.network.onConnect().subscribe(() => {
+        console.log('network connected!');
+        this.connection = true;
+        this.iniciarVista();
+      })
+    }else{
+      this.connection = true;
+      this.iniciarVista();
+    }
+
+  }
+
+  iniciarVista(){
     this.userService.getUser().then((user)=>{
       this.user = user;
       if(user){
@@ -282,7 +302,7 @@ export class HomePage {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       targetWidth: 800,
-      targetHeight: 600
+      targetHeight: 600,
     }
     
     this.camera.getPicture(options).then((imgUrl) => {

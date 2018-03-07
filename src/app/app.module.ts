@@ -27,6 +27,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { PipesModule } from '../pipes/pipes.module'
+import { Network } from '@ionic-native/network';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { PipesModule } from '../pipes/pipes.module'
     ProfilePage
   ],
   providers: [
+    Network,
     StatusBar,
     SplashScreen,
     Camera,

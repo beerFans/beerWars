@@ -91,7 +91,16 @@ export class TableService {
             // resolve(table);
         }
         else {
-          resolve(null);
+          this.validQR(QRId).then((res) => {
+            console.log("res ",res);
+            if(!res) {
+              reject('QR Invalido');
+            }
+            else {
+              resolve(null);
+            }
+          })
+          
           // this.validQR(QRId).then((res) => {
           //   console.log("res ",res);
           //   if(!res) {

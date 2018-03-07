@@ -65,7 +65,7 @@ export class ProfilePage {
       this.userService.setProfileImg(base64Image, this.user.id).then((img:string)=>{
       	//console.log("img en profile", img);
       	console.log("user", this.user);
-      	this.user.avatarUrl = base64Image;
+      	this.avatarUrl = base64Image;
       	//this.hasPicture = true;
       });
       //this.ts.changePicture(this.table.id, base64Image);

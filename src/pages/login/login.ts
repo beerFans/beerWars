@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserService } from '../../services/user.service';
 import { AlertController, LoadingController, ModalController, ViewController } from 'ionic-angular';
 
+import { Network } from '@ionic-native/network';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -17,14 +19,24 @@ import { AlertController, LoadingController, ModalController, ViewController } f
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  connection = true;
+
+
+  constructor(private network: Network, public navCtrl: NavController, public navParams: NavParams,
               private loadingCtrl: LoadingController, private userService:UserService,
               private alertCtrl: AlertController, private viewCtrl: ViewController
             ){
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    if(this.network.type === 'none'){
+      this.connection = false;
+
+      this.network.onConnect().subscribe(data => {
+        this.connection = true;
+        console.log(data)
+      }, error => console.error(error));
+    }
   }
 
   loginWithFacebook() {
