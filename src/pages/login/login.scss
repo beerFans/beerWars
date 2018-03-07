@@ -1,7 +1,22 @@
 page-login {
 
     ion-content {
-        background: linear-gradient(to bottom, #3a404d, #181c26);
+        // background: linear-gradient(to bottom, #3a404d, #181c26);
+        background-image: url('../assets/imgs/wood-background4.jpeg');
+        background-size: cover;
+    }
 
+    ion-grid {
+        height: 80%;
+        justify-content: flex-end;
+        padding-bottom: 50px; 
+    }
+
+    .title {
+        height: auto;
+        padding-top: 50px; 
+        font-size: 50px;
+        color: rgb(171, 179, 184);
+        text-shadow: 5px 1px 0 black;
     }
 }

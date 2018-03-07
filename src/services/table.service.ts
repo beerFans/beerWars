@@ -32,12 +32,42 @@ export class TableService {
     });
   }
 
+  createAndJoin(QRId) {
+    return new Promise((resolve,reject)=> {
+      this.validQR(QRId).then((res) => {
+        console.log("res ",res);
+        if(!res) {
+          reject('QR Invalido');
+        }
+        else {
+          console.log('No existia mesa, creando mesa');
+          this.apollo.mutate({
+            mutation: CREATE_TABLE_MUTATION,
+            variables: {
+              QRId: QRId,
+            },
+            refetchQueries: ['TableQRQuery', 'AllTablesQuery']
+          }).subscribe((response) => {
+            console.log('Mesa creada');
+            let table = response.data.createTable;
+            this.joinTable(table.id, this.user.id);
+            this.storage.set('joined', true);
+            this.storage.set('table', table);
+            this.events.publish('user:joined');
+            console.log('Fin union a mesa creada');
+            resolve(table);
+          });
+        }
+      }); 
+    })
+    
+  }
+
   getTableByQR(QRId) {
 
     return new Promise((resolve, reject) => {
       console.log('Buscando Mesa ' + QRId);
 
-      let sub =
       this.apollo.watchQuery<any>({
         query: TABLE_QR_QUERY,
         variables: {
@@ -50,44 +80,45 @@ export class TableService {
         console.log(response);
 
         if (table) {
+          resolve (table);
 
-            this.joinTable(table.id, this.user.id);
-            this.storage.set('joined', true);
-            this.storage.set('table', table);
-            this.events.publish('user:joined');
-            console.log('Ya existia la mesa, uniendose');
-            console.log('fin unirse a mesa existente');
-            resolve(table);
+            // this.joinTable(table.id, this.user.id);
+            // this.storage.set('joined', true);
+            // this.storage.set('table', table);
+            // this.events.publish('user:joined');
+            // console.log('Ya existia la mesa, uniendose');
+            // console.log('fin unirse a mesa existente');
+            // resolve(table);
         }
         else {
-          this.validQR(QRId).then((res) => {
-            console.log("res ",res);
-            if(!res) {
-              reject('QR Invalido');
-            }
-            else {
-              console.log('No existia mesa, creando mesa');
-              this.apollo.mutate({
-                mutation: CREATE_TABLE_MUTATION,
-                variables: {
-                  QRId: QRId,
-                },
-                refetchQueries: ['TableQRQuery', 'AllTablesQuery']
-              }).subscribe((response) => {
-                console.log('Mesa creada');
-                let table = response.data.createTable;
-                this.joinTable(table.id, this.user.id);
-                this.storage.set('joined', true);
-                this.storage.set('table', table);
-                this.events.publish('user:joined');
-                console.log('Fin union a mesa creada');
-                resolve(table);
-              });
-            }
-          });   
+          resolve(null);
+          // this.validQR(QRId).then((res) => {
+          //   console.log("res ",res);
+          //   if(!res) {
+          //     reject('QR Invalido');
+          //   }
+          //   else {
+          //     console.log('No existia mesa, creando mesa');
+          //     this.apollo.mutate({
+          //       mutation: CREATE_TABLE_MUTATION,
+          //       variables: {
+          //         QRId: QRId,
+          //       },
+          //       refetchQueries: ['TableQRQuery', 'AllTablesQuery']
+          //     }).subscribe((response) => {
+          //       console.log('Mesa creada');
+          //       let table = response.data.createTable;
+          //       this.joinTable(table.id, this.user.id);
+          //       this.storage.set('joined', true);
+          //       this.storage.set('table', table);
+          //       this.events.publish('user:joined');
+          //       console.log('Fin union a mesa creada');
+          //       resolve(table);
+          //     });
+          //   }
+          // });   
         }
       });
-      // sub.unsubscribe();
     }
   );
   }

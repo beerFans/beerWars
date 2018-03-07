@@ -73,12 +73,24 @@ export class HomePage {
   }
 
   joinTable(qr) {
-    this.ts.getTableByQR(qr).then((table) => {
-      console.log(table);
-      this.table = table;
-      this.joined = true;
-      this.ts.updateTable(this.table.id);
-      this.realTimeSubscribe();
+    this.ts.getTableByQR(qr).then((table: Table) => {
+      if(table) {
+        this.ts.joinTable(table.id,this.user.id);
+        this.table = table;
+        this.joined = true;
+        this.ts.updateTable(this.table.id);
+        this.realTimeSubscribe();
+      }
+      else {
+        this.ts.createAndJoin(qr).then((table) => {
+          console.log(table);
+          this.table = table;
+          this.joined = true;
+          this.ts.updateTable(this.table.id);
+          this.realTimeSubscribe();
+        });
+      }
+      
     },(error) => {
       this.errorAlert(error);
     });
@@ -193,8 +205,11 @@ export class HomePage {
       }
       else {
         this.mesaCerrada();
+        this.querySubscription.unsubscribe();
+        this.apollo.getClient().resetStore();
         this.joined = false;
-        this.navCtrl.parent.select(2);
+        this.table = null;
+        this.navCtrl.parent.select(1);
       }
     });
 
@@ -205,11 +220,17 @@ export class HomePage {
 
   }
 
-  ionViewWillLeave() {
-    console.log("unsubscribe");
-    this.querySubscription.unsubscribe();
-    this.apollo.getClient().resetStore();
-  }
+  // ionViewWillEnter() {
+  //   if(this.table) {
+  //     this.realTimeSubscribe();
+  //   }
+  // }
+
+  // ionViewWillLeave() {
+  //   console.log("unsubscribe");
+  //   this.querySubscription.unsubscribe();
+  //   this.apollo.getClient().resetStore();
+  // }
 
   mesaCerrada() {
     let alert = this.alertCtrl.create({

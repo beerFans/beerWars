@@ -1,9 +1,21 @@
 page-home {
 
+  .button-bottom {
+    vertical-align: bottom;
+  }
+
   .userPic {
     border-radius: 100%;
     width: 45px;
     height: auto;
+    
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 0px;
+    margin-bottom: 20px;
+    width: 100%;
   }
 
   ion-item {

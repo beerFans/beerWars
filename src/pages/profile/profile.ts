@@ -24,13 +24,15 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-	user:User;
+  user;
+  avatarUrl;
 	//hasPicture = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, private camera: Camera,
   						private userService: UserService, private alertCtrl: AlertController ) 
   {
-  	this.userService.getUser().then((user:User)=>{
-    	this.user = user;
+  	this.userService.getUser().then((user)=>{
+      this.user = user;
+      this.avatarUrl = user.avatarUrl;
 
     	// if(user != undefined && user.avatarUrl != null && user.avatarUrl != "" ){
     	// 	//this.hasPicture = true;

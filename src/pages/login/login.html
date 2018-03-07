@@ -6,22 +6,28 @@
   </ion-navbar>
 </ion-header> -->
 
+
 <ion-content padding>
 
-  <div padding-top>
-    <img class="logo" src="assets/imgs/beerWars.jpg">
-  </div>
-  <ion-grid padding-left padding-top padding-right>
-    <ion-row>
-      <button ion-button block color="facebook" (click)="loginWithFacebook()">
-        Conectate con Facebook
-      </button>
-    </ion-row>
-    <ion-row >
-      <button ion-button block color="google" (click)="loginWithGoogle()" >
-        Conectate con Google
-      </button>
-    </ion-row>
-  </ion-grid>
 
+  <!-- <div padding-top>
+    <img class="logo" src="assets/imgs/beerWars.jpg">
+  </div> -->
+    <!-- <h2 text-center>Login</h2> -->
+    <h1 class="title" text-center>BeerWars</h1>
+    <ion-grid padding-left padding-top padding-right>
+      <ion-row style="color: white"> 
+        <ion-label text-center>Conectate con</ion-label>
+      </ion-row>
+      <ion-row>
+        <button ion-button block color="facebook" (click)="loginWithFacebook()">
+          Facebook
+        </button>
+      </ion-row>
+      <ion-row >
+        <button ion-button block color="google" (click)="loginWithGoogle()" >
+          Google
+        </button>
+      </ion-row>
+    </ion-grid>
 </ion-content>

@@ -72,6 +72,8 @@ export class UserService {
         let credentials = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken)
         firebase.auth().signInWithCredential(credentials).then((info)=>{
           console.log(info);
+          this.loginHandler(info);
+
         }).catch((error)=>{console.log(error);})
       }).catch((error)=>{console.log(error);})
     })

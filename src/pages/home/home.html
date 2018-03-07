@@ -14,11 +14,7 @@
 
 <ion-content class="card-background-page">
 
-  <!-- Fotito
-  beerCount
-  nombre de la mesa -->
   <div *ngIf="loading" loading>
-    <!-- <img src="assets/imgs/beerFillGif.gif"> -->
     <ion-spinner></ion-spinner>
   </div>
   <div *ngIf="!loading">
@@ -57,10 +53,10 @@
         <h1>BIENVENIDO A BEERWARS</h1>
         <!-- <h2 > A</h2>
         <h2 > BEERWARS </h2> -->
-        <h3 style="bottom:50px;" >Escanea el codigo en tu mesa para ingresar</h3>
+        <h3 >Escanea el codigo en tu mesa para ingresar</h3>
       </div>
-      <div text-center style="bottom:40px">
-        <button ion-button outline round (click)="scanQR()" color="light">Unirse a una mesa</button>
+      <div class="footer" text-center>
+        <button class="button-bottom" ion-button outline round (click)="scanQR()" color="light">Unirse a una mesa</button>
       </div>
     </div>
   </div>
