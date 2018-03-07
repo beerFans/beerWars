@@ -7,6 +7,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { IonicStorageModule } from '@ionic/storage';
 import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { Network } from '@ionic-native/network';
 
 
 import { MyApp } from './app.component';
@@ -63,7 +64,8 @@ import { PipesModule } from '../pipes/pipes.module'
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserService,
     Facebook,
-    GooglePlus
+    GooglePlus,
+    Network
   ]
 })
 export class AppModule {}

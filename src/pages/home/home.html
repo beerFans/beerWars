@@ -21,7 +21,22 @@
     <!-- <img src="assets/imgs/beerFillGif.gif"> -->
     <ion-spinner></ion-spinner>
   </div>
-  <div *ngIf="!loading">
+
+<!--   <div *ngIf="!connection" text-center>
+    <div class="center"><ion-icon name="warning"></ion-icon></div>
+    <ion-label>Verifique su Conexión </ion-label>
+  </div> -->
+
+  <ion-grid *ngIf="!connection">
+    <ion-row>
+      <ion-icon style="display: block; position: absolute; left: 47%;" name="warning"></ion-icon>
+    </ion-row>
+    <ion-row>
+      <ion-label text-center >Verifique su Conexión </ion-label>
+    </ion-row>
+  </ion-grid>
+
+  <div *ngIf="!loading && connection">
     <div *ngIf="joined && table">
       <ion-card style="overflow: visible">
         <img src="{{table.picture}}" style="width: 100vw ; height: auto"/>

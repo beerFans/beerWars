@@ -7,21 +7,32 @@
 </ion-header> -->
 
 <ion-content padding>
-
-  <div padding-top>
-    <img class="logo" src="assets/imgs/beerWars.jpg">
-  </div>
-  <ion-grid padding-left padding-top padding-right>
+  
+  <ion-grid *ngIf="!connection">
     <ion-row>
-      <button ion-button block color="facebook" (click)="loginWithFacebook()">
-        Conectate con Facebook
-      </button>
+      <ion-icon style="display: block; position: absolute; left: 47%;" name="warning"></ion-icon>
     </ion-row>
-    <ion-row >
-      <button ion-button block color="google" (click)="loginWithGoogle()" >
-        Conectate con Google
-      </button>
+    <ion-row>
+      <ion-label text-center >Verifique su Conexión </ion-label>
     </ion-row>
   </ion-grid>
+
+  <div *ngIf="connection">
+    <div padding-top>
+      <img class="logo" src="assets/imgs/beerWars.jpg">
+    </div>
+    <ion-grid padding-left padding-top padding-right>
+      <ion-row>
+        <button ion-button block color="facebook" (click)="loginWithFacebook()">
+          Conectate con Facebook
+        </button>
+      </ion-row>
+      <ion-row >
+        <button ion-button block color="google" (click)="loginWithGoogle()" >
+          Conectate con Google
+        </button>
+      </ion-row>
+    </ion-grid>
+  </div>
 
 </ion-content>

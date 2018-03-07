@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { NavController } from 'ionic-angular';
+import { Network } from '@ionic-native/network';
+
 // import { CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, TABLE_QR_QUERY, CreateTableMutationResponse } from '../../app/graphql';
 import { TableService } from '../../services/table.service';
 import { UserService } from '../../services/user.service';
@@ -48,12 +50,35 @@ export class HomePage {
   subscriptions: Subscription[] = [];
 
   public loading = true;
-
-
+  public connection = true;
+  private connectSubscription
   
 
 
-  constructor(private camera: Camera, private apollo: Apollo, public navCtrl: NavController,private ts:TableService, private userService: UserService, private qrScanner: QRScanner, private alertCtrl: AlertController) {
+  constructor(private camera: Camera, private apollo: Apollo, public navCtrl: NavController,
+              private ts:TableService, private userService: UserService, private qrScanner: QRScanner, 
+              private alertCtrl: AlertController, private network: Network 
+  ) 
+  {
+    if(this.network.type === 'none'){
+      this.connection = false;
+      this.loading = false;
+      this.connectSubscription = this.network.onConnect().subscribe(() => {
+        console.log('network connected!');
+        this.connection = true;
+        this.iniciarVista();
+      })
+    }else{
+      this.connection = true;
+      this.iniciarVista();
+    }    
+  }
+
+  ionViewWillUnload(){
+    this.connectSubscription.unsubscribe();
+  }
+
+  iniciarVista(){
     this.userService.getUser().then((user)=>{
       this.user = user;
       if(user){
@@ -205,11 +230,11 @@ export class HomePage {
 
   }
 
-  ionViewWillLeave() {
-    console.log("unsubscribe");
-    this.querySubscription.unsubscribe();
-    this.apollo.getClient().resetStore();
-  }
+  // ionViewWillLeave() {
+  //   console.log("unsubscribe");
+  //   this.querySubscription.unsubscribe();
+  //   this.apollo.getClient().resetStore();
+  // }
 
   mesaCerrada() {
     let alert = this.alertCtrl.create({

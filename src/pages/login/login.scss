@@ -1,7 +1,13 @@
 page-login {
 
-    ion-content {
-        background: linear-gradient(to bottom, #3a404d, #181c26);
+  ion-content {
+    background: linear-gradient(to bottom, #3a404d, #181c26);
+  }
 
-    }
+  ion-grid {
+    height: 100%;
+    justify-content: center;
+    font-size: 1em;
+    color: white;
+  }
 }
