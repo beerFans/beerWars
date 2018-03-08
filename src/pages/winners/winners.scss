@@ -1,0 +1,25 @@
+page-winners {
+  .toolbar-background { background-color: #263238 !important; }
+
+    ion-list {
+        color: white;
+        ion-item {
+             &:nth-child(2n-1) {
+                background: #37474F;
+            }
+
+            &:nth-child(2n) {
+                background: #455A64;
+            }
+
+            ion-label {
+                color: white;
+            }
+        }
+    }
+
+    ion-content {
+        background: linear-gradient(to bottom, #3a404d, #181c26);
+        
+      }
+}

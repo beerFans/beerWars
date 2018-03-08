@@ -13,6 +13,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { UserService } from '../services/user.service';
 
 import { User } from '../models/user.model';
+import { WinnersPage } from '../pages/winners/winners';
 
 export interface PageInterface {
   title: string;

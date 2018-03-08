@@ -24,6 +24,24 @@ export interface AllTableQueryResponse {
   loading: boolean;
 }
 
+export const ALL_WINNERS_QUERY = gql`
+  query AllWinnerTables {
+    allWinnerTables(orderBy: createdAt_DESC) {
+      id
+      name
+      beerCount
+      picture
+      createdAt
+      users {
+        id
+        name
+        avatarUrl
+      }
+    }
+  }
+`;
+
+
 export const TABLE_QUERY = gql`
   query TableQuery($id: ID!){
     Table(
@@ -71,9 +89,10 @@ export interface TableQRQueryResponse {
 }
 
 export const CREATE_TABLE_MUTATION = gql`
-  mutation CreateTableMutation($QRId: String!) {
+  mutation CreateTableMutation($QRId: String!, $nro: Int!) {
     createTable(
       qrID: $QRId,
+      numero: $nro,
       beerCount: 0,
       picture: "https://voiceofpeopletoday.com/wp-content/uploads/2017/11/Beer-kills-the-liver-study.jpg",
       name: "Sin nombre"
@@ -237,6 +256,7 @@ export const NEW_TABLE_SUBSCRIPTION = gql`
         beerCount
         picture
         qrID
+        numero
         users {
           id
           name
@@ -422,6 +442,7 @@ export const QR_QUERY = gql`
       description: $description
     ) {
       id
+      nroMesa
     }
   }
 `;

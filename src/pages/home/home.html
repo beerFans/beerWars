@@ -12,7 +12,7 @@
   </ion-navbar>
 </ion-header> -->
 
-<ion-content class="card-background-page">
+<ion-content class="card-background-page" [ngClass]="{'joined': joined}">
 
   <div *ngIf="loading" loading>
     <ion-spinner></ion-spinner>
@@ -52,7 +52,7 @@
           <!-- <ion-icon name="body" item-start large></ion-icon> -->
           <img class="userPic" src="{{user.avatarUrl}}" item-start alt=""/>
           <h2>{{user.name}}</h2>
-          <ion-icon name="beer" small>{{user.beerCount}}</ion-icon>
+          <!-- <ion-icon name="beer" small>{{user.beerCount}}</ion-icon> -->
         </ion-item>
       </div>
       

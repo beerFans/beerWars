@@ -7,7 +7,7 @@ page-table {
   }
 
   ion-item {
-    // background: linear-gradient(to top, #37474F, #181c26);
+   
 
     h2, label, ion-icon{
       color: #fff;
@@ -20,6 +20,9 @@ page-table {
     &:nth-child(2n) {
       background: #455A64;
     }
+
+    // background: transparent !important;
+
 
    
   }
@@ -60,8 +63,15 @@ page-table {
       width: 100%;
       color: #fff;
     }
-    background: linear-gradient(to bottom, #455A64, #37474F);
+    // background: linear-gradient(to bottom, #455A64, #37474F);
 
+  }
+
+  ion-content {
+    background: linear-gradient(to bottom, #3a404d, #181c26);
+    // background-image: url('../assets/imgs/wood-background.jpg');
+    // background-size: contain;
+    
   }
 
   // ion-content {

@@ -10,6 +10,7 @@ type User @model {
   email: String
 
   table: Table @relation(name: "UserTable")
+  wins : [WinnerTable!]! @relation(name: "TableWinner")
 
 }
 
@@ -22,6 +23,7 @@ type Table @model {
   picture: String
   beerCount: Int
   qrID: String @isUnique
+  numero: Int @isUnique
 
   qr: QR @relation(name: "TableQR")
   waiter: Waiter @relation (name: "WaitersTables")
@@ -33,12 +35,24 @@ type Table @model {
 
 type QR @model {
   id: ID! @isUnique
+  nroMesa: Int! @isUnique
   createdAt: DateTime!  # optional system field (read-only)
   updatedAt: DateTime!  # optional system field (read-only)
 
   table: Table @relation(name: "TableQR")
   description: String! @isUnique
 
+}
+
+type WinnerTable @model {
+  id: ID! @isUnique
+  createdAt: DateTime!  # optional system field (read-only)
+  updatedAt: DateTime!  # optional system field (read-only)
+
+  name: String
+  picture: String
+  beerCount: Int
+  users: [User!]! @relation(name: "TableWinner")  
 }
 
 type Waiter @model {

@@ -6,7 +6,7 @@ import {UserService} from './user.service'
 
 import { REMOVE_USER_FROM_TABLE_MUTATION, CREATE_TABLE_MUTATION, ALL_TABLES_QUERY, 
         TABLE_QR_QUERY, JOIN_TABLE_MUTATION, FAKE_UPDATE_TABLE_MUTATION, UPDATE_TABLE_NAME_MUTATION, 
-        UPDATE_TABLE_PICTURE_MUTATION, QR_QUERY, TableQRQueryResponse } from '../app/graphql';
+        UPDATE_TABLE_PICTURE_MUTATION, QR_QUERY, TableQRQueryResponse, ALL_WINNERS_QUERY } from '../app/graphql';
 
 
 @Injectable()
@@ -26,7 +26,17 @@ export class TableService {
       this.apollo.watchQuery<any>({
         query: ALL_TABLES_QUERY
       }).valueChanges.subscribe((response) => {
-        // console.log(response.data.allTables);
+        resolve(response);
+      });
+    });
+  }
+
+  getWinners() {
+    return new Promise((resolve, reject) => {
+      console.log("Buscando mesas ganadoras");
+      this.apollo.watchQuery<any>({
+        query: ALL_WINNERS_QUERY
+      }).valueChanges.subscribe((response) => {
         resolve(response);
       });
     });
@@ -45,6 +55,7 @@ export class TableService {
             mutation: CREATE_TABLE_MUTATION,
             variables: {
               QRId: QRId,
+              nro: res
             },
             refetchQueries: ['TableQRQuery', 'AllTablesQuery']
           }).subscribe((response) => {
@@ -143,7 +154,7 @@ export class TableService {
           let qr = response.data.QR;
           // console.log("qr response", response);
           if(qr) {
-            resolve(true);
+            resolve(qr.nroMesa);
           }
           else {
             resolve(false);

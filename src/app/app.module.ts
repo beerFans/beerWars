@@ -18,6 +18,7 @@ import { RankingPage } from '../pages/ranking/ranking';
 import { TablePage } from '../pages/table/table';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ProfilePage } from '../pages/profile/profile';
+import { WinnersPage } from '../pages/winners/winners';
 
 import { UserService } from '../services/user.service';
 
@@ -37,7 +38,8 @@ import { Network } from '@ionic-native/network';
     LoginPage,
     RankingPage,
     TabsPage,
-    ProfilePage
+    ProfilePage,
+    WinnersPage
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ import { Network } from '@ionic-native/network';
     RankingPage,
     LoginPage,
     TabsPage,
-    ProfilePage
+    ProfilePage,
+    WinnersPage
   ],
   providers: [
     Network,

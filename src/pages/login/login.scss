@@ -10,7 +10,7 @@ page-login {
         ion-grid {
             height: 80%;
             justify-content: flex-end;
-            padding-bottom: 50px; 
+            padding-bottom: 10px; 
         }
     }
 
@@ -26,7 +26,11 @@ page-login {
         padding-top: 50px; 
         font-size: 50px;
         // color: rgb(0, 0, 0);
-        color: rgb(255, 255, 255);
-        text-shadow: 5px 1px 0 black;
+        color: #e4d2b7;
+        // text-shadow: 5px 1px 0 black;
+        // text-shadow: 0px 1px 0px rgba(255,255,255,.3), 0px -1px 0px rgba(0,0,0,.7);
+        text-shadow: 0px -1px 0px rgba(0,0,0,.5); /* 50% black coming from the top */
+        
     }
+
 }

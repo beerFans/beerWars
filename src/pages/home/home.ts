@@ -253,15 +253,20 @@ export class HomePage {
   // }
 
   mesaCerrada() {
-    let alert = this.alertCtrl.create({
-      title: 'Mesa cerrada',
-      subTitle: 'Tu mesa ha sido cerrada',
-      buttons: ['OK']
-    });
-    alert.present();
-    for (let sub of this.subscriptions) {
-      sub.unsubscribe();
-    }
+    this.userService.isLoggedIn().then((res) => {
+      if(res) {
+        let alert = this.alertCtrl.create({
+          title: 'Mesa cerrada',
+          subTitle: 'Tu mesa ha sido cerrada',
+          buttons: ['OK']
+        });
+        alert.present();
+        for (let sub of this.subscriptions) {
+          sub.unsubscribe();
+        }
+      }
+    })
+    
     // this.apollo.getClient().resetStore();
   }
 
@@ -337,6 +342,7 @@ export class HomePage {
             console.log('Buy clicked');
             this.ts.exitTable(this.table.id).then((data) => {
               if(data) {
+                this.ts.updateTable(this.table.id);
                 this.table = null;
                 this.joined = false;
                 for (let sub of this.subscriptions) {

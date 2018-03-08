@@ -2,7 +2,7 @@
 page-profile {
 	* {
   box-sizing:border-box;
-  transition:.5s ease-in-out;
+  // transition:.5s ease-in-out;
 }
 
 .img-circle {
@@ -42,7 +42,7 @@ page-profile {
   width:100%;
   &.loaded {
     opacity:1;
-    transition:2.5s ease-in-out;
+    // transition:2.5s ease-in-out;
   }
   #content {
     display:table-cell;
@@ -56,7 +56,7 @@ page-profile {
   //margin:0 auto;
   //position:relative;
   z-index:1;
-  perspective:600px;
+  // perspective:600px;
   #front,#back {
     //border-radius:10px;
     height:100%;
@@ -64,12 +64,12 @@ page-profile {
     position:absolute;
     left:0;
     top:0;
-    transform-style:preserve-3d;
-    backface-visibility:hidden;
+    // transform-style:preserve-3d;
+    // backface-visibility:hidden;
     box-shadow:0 0 10px rgba(0,0,0,.2);
   }
   #front {
-    transform:rotateY(0deg);
+    // transform:rotateY(0deg);
     overflow:hidden;
     z-index:1;
     #top-pic {

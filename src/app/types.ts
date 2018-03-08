@@ -25,6 +25,16 @@ export class Table {
   waiter?: Waiter;
   users?: User[];
   dummy?: string;
+  numero?: number;
+}
+
+export class WinnerTable {
+  id?: string;
+  name?: string;
+  picture?: string;
+  beerCount?: number;
+  users?: User[];
+  createdAt? : Date;
 }
 
 export class Waiter {

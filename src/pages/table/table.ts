@@ -23,17 +23,21 @@ import { TableService } from '../../services/table.service';
 })
 export class TablePage {
 
-  table : Table;
+  table;
+  from;
   subscriptions: Subscription[] = [];
 
 
   constructor(public apollo: Apollo, public navCtrl: NavController, public navParams: NavParams) {
     this.table = this.navParams.get('table');
+    this.from = this.navParams.get('from');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TablePage');
-    this.realTimeSubscribe();
+    if(this.from != 'winners') {
+      this.realTimeSubscribe();
+    }
     
   }
 
